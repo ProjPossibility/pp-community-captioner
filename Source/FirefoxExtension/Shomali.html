@@ -87,14 +87,6 @@ body.section-3 #menu li#nav-3 a
 
 <script language="JavaScript" type="text/javascript">
 				
-				function add()
-				{
-				}
-				
-				function remove()
-				{
-				}
-				
 				function update( num )
 				{
 				 for( var i = 1 ; i <= 3 ; i++ )
@@ -105,6 +97,208 @@ body.section-3 #menu li#nav-3 a
 				 document.getElementById( 'content' + num ).style.display = "inline" ;
 				 document.getElementsByTagName( "body" )[0].className = "section-" + num ;
 				}
+
+		var counter = 0 ;
+
+				function AddNewRow()
+				{
+					var objTable,objTBody,objTR,objTD,objDIV;
+					
+					objDIV=document.createElement("div")
+					objDIV.setAttribute( "style" , "padding : 10px" )
+					objTable=document.createElement("table")
+					objTBody=document.createElement("tbody")
+					
+					objTR=document.createElement("tr")
+					objTD=document.createElement("td")
+					
+					objTD.innerHTML="Start: "
+					objTD.setAttribute("style" , "font-family: courier ; font-weight: bold ; font-size : 12px")
+					objTR.appendChild(objTD)
+
+					objSP=document.createElement("span")
+					objSP.id=counter+":S"
+					objSP.innerHTML = "0:0" 
+					objSP.setAttribute( 'style' , 'font-weight: normal' )
+					objTD.appendChild(objSP)
+					
+					objTD=document.createElement("td")
+					objTD.innerHTML="<img src = 'plus.gif' id='"+counter+":SINC' onclick='javascript:IncrementTime(\""+counter+":S\")' /><img src = 'minus.gif' id='"+counter+":SDEC' onclick='javascript:DecrementTime(\""+counter+":S\")' />"
+					objTR.appendChild(objTD)
+
+					objTD=document.createElement("td")
+					objTD.innerHTML="- End: "
+					objTD.setAttribute("style" , "font-family: courier ; font-weight: bold ; font-size : 12px")
+					objTR.appendChild(objTD)
+					
+					objSP=document.createElement("span")
+					objSP.id=counter+":E"
+					objSP.innerHTML = "0:0"
+					objSP.setAttribute( 'style' , 'font-weight: normal' )
+					objTD.appendChild(objSP)
+					
+					objTD=document.createElement("td")
+					objTD.innerHTML="<img src = 'plus.gif' id='"+counter+":EINC' onclick='javascript:IncrementTime(\""+counter+":E\")' /><img src = 'minus.gif' id='"+counter+":EDEC' onclick='javascript:DecrementTime(\""+counter+":E\")' />"
+					objTR.appendChild(objTD)
+					
+					objTD=document.createElement("td")
+					objTD.setAttribute( 'rowspan' , 2 )
+					objTD.setAttribute( 'style' , 'padding : 10px' )
+					objTR.appendChild(objTD)
+
+					objA=document.createElement("a")
+					objA.id = counter+":A"
+					objA.setAttribute( 'href' , "" )
+					objA.setAttribute( 'style' , "text-decoration: none ; font-family: courier ; font-size: 24px ; font-weight: bold ;" )
+					objTD.appendChild(objA)
+
+					objT=document.createTextNode("X")
+					objA.appendChild(objT)
+					
+
+					objTBody.appendChild(objTR)
+					
+					objTR=document.createElement("tr")
+					objTD=document.createElement("td")
+					
+					
+					objTD.innerHTML="<input type='text' size = 50 id='"+counter+":CAPTION' />"
+					objTD.setAttribute( 'colspan' , 4 ) 
+					objTR.appendChild(objTD)
+					
+					objTBody.appendChild(objTR)
+					
+					objTable.appendChild(objTBody)
+					
+					objDIV.appendChild(objTable)
+					
+					
+					objDIV.style.overflow="auto"
+					document.getElementById("divCaptions").appendChild(objDIV)
+
+					objDIV=document.createElement("div")
+					document.getElementById("divCaptions").appendChild(objDIV)
+
+					counter++
+					
+				}
+				
+				function IncrementTime(id)
+				{
+						
+					var obj=document.getElementById(id)
+					var value=obj.innerHTML
+					var mm
+					var ss
+					
+					if(value=="")
+					{
+						mm=0;
+						ss=1;	
+						
+						obj.innerHTML=mm+":"+ss
+					}
+					else
+						{
+							mm=parseInt(value.split(":")[0],10)
+							ss=parseInt(value.split(":")[1],10)
+							
+							if(ss%59==0 && ss!=0)
+							{
+								ss=0;
+								mm++;
+							}
+							else
+								{
+									ss++;
+								}
+								obj.innerHTML=mm+":"+ss
+						}
+				}
+				
+				function DecrementTime(id)
+				{
+						
+					var obj=document.getElementById(id)
+					var value=obj.innerHTML
+					var mm
+					var ss
+					
+					if(value=="")
+					{
+						mm=0;
+						ss=1;	
+						
+						obj.innerHTML=mm+":"+ss
+					}
+					else
+						{
+							mm=parseInt(value.split(":")[0],10)
+							ss=parseInt(value.split(":")[1],10)
+							
+							if(ss==0 && mm!=0)
+							{
+								ss=59;
+								
+								mm--;
+							}
+							else 
+								{
+									if(mm==0 && ss==0)
+									{
+										
+									}
+									else
+										{
+									ss--;		
+										}
+									
+								}
+
+								obj.innerHTML=mm+":"+ss
+						}
+				}
+				
+    function Change(id,type,category)
+    {
+        
+        var obj=document.getElementById(id)
+        var newObj
+            
+        if(obj.type!="textarea" && obj.type!="text")
+        {
+            
+            
+            newObj=document.createElement(type)
+            if(type=="textarea")
+            {
+                newObj.rows="5"
+                newObj.cols="50"
+            }
+            else
+            {
+                newObj.type="text"
+                newObj.style.width="95%"       
+            }
+            newObj.value=obj.innerHTML
+            newObj.id=id
+            
+            newObj.onblur=function(){Change(id,type,category)}
+            newObj.className="txt"
+            obj.parentNode.replaceChild(newObj,obj)
+        }
+        else
+        {
+            
+            newObj=document.createElement("a")
+            newObj.id=id
+            newObj.innerHTML=obj.value
+            newObj.href="javascript:Change('"+id+"','"+type+"','"+category+"')"
+            
+            newObj.style.color="Black"
+            obj.parentNode.replaceChild(newObj,obj)
+        }
+    }
 				
 </script>
 
@@ -120,7 +314,18 @@ body.section-3 #menu li#nav-3 a
 
 	<div id = "content1" style = "display:none" >
 	
-		 <div style = "border: 5px double #ccc; background-color: #E8EBF0; width: 100% ; height: 50%" >
+		 <div style = "border: 5px double #ccc; background-color: #E8EBF0; width: 100% ; height: 70%" >
+
+	<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="100%" height="100%" id="ccPlayer" align="middle">
+  	<param name="allowFullScreen" value="true" />
+  	<param name="allow-access-from domain" value="*" />
+  	<!--<param name="movie" value="ccPlayer.swf?ccVideoName=http://proxy-33.dailymotion.com/14/320x240/flv/3404263.flv?d71d137b58b5bff62c344e0b3762057d132a704&ccVideoBufferTime=5&ccCaptSourceType=external&ccCaptionSource=http://www-scf.usc.edu/~ramavajj/flash/car.dfxp.xml&ccCaptionLanguage=en&ccCaptionAutoHide=false&ccOverrideFileStyle=false&ccDisplayRollup=false"/>-->
+  	<param name="movie" value="player.swf"/>
+  	<param name="quality" value="high" />
+  	<param name="bgcolor" value="#cccccc" />
+  	<embed src="http://www-scf.usc.edu/~ramavajj/flash/player.swf" allowfullscreen="true" quality="high" bgcolor="#cccccc"  name="ccPlayer" align="middle" allowScriptAccess="sameDomain" height="100%" width="100%" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+  	</object>
+	
 		 </div>
 	
 	</div>
@@ -129,66 +334,10 @@ body.section-3 #menu li#nav-3 a
 		 
 			 <form method = "get" action = "">
 			     
-					 <table border = "0" align = "center" width = "100%">
-					 				<tr>
-											<th style = "width: 20%"> Start </th>
-											<th style = "width: 20%"> End </th>
-											<th> Caption</th>
+					 <a href="javascript:AddNewRow()">Add Caption</a> <br /><br />
 
-									</tr>
-									
-									<tr valign="top">
-											<td>
-													<input name = "begin" size = "10" style = "width:100%" />
-											</td>
-											
-											<td>
-													<input name = "end" size = "10" style = "width:100%" />
-											</td>
-											
-											<td>
-
-													<textarea name = "caption" rows = "1" style = "width:100%" ></textarea>
-											</td>
-									</tr>
-									
-									<tr valign="top">
-											<td>
-													<input name = "begin" size = "10" style = "width:100%" />
-											</td>
-											
-											<td>
-
-													<input name = "end" size = "10" style = "width:100%" />
-											</td>
-											
-											<td>
-													<textarea name = "caption" rows = "1" style = "width:100%" ></textarea>
-											</td>
-									</tr>
-									
-									<tr valign="top">
-											<td>
-
-													<input name = "begin" size = "10" style = "width:100%" />
-											</td>
-											
-											<td>
-													<input name = "end" size = "10" style = "width:100%" />
-											</td>
-											
-											<td>
-													<textarea name = "caption" rows = "1" style = "width:100%" ></textarea>
-											</td>
-
-									</tr>
-									
-									<tr>
-											<td align = "left" colspan = "2"> <a href = "javascript:add()" style = "font-size: 12px" >Add Another Caption</a> </td>
-											<td align = "right"> <a href = "javascript:remove()" style = "font-size: 12px" >Remove Caption</a> </td>
-									</tr>
-					 </table>
-
+						<div id="divCaptions" style="height:300px;overflow:auto">
+						</div>
 					 
 					 <br /><br />
 					 
@@ -196,7 +345,30 @@ body.section-3 #menu li#nav-3 a
 		 	 </form>
 	</div>
 
-	<div id = "content3" >Available Versions ...</div>
+	<div id = "content3" >
+		
+		Available Versions (4): <br /><br />
+
+		<table align = "center" width = "70%" style = "font-family : courier">
+
+		<tr>
+			<td> <b>Version 4:</b> March 23rd 08 </td> <td> <img src = "play.jpg" /> <img src = "save.jpg" /> </td>
+		</tr>	
+		
+		<tr>
+			<td> <b>Version 3:</b> March 20th 08 </td> <td> <img src = "play.jpg" /> <img src = "save.jpg" /> </td>
+		</tr>	
+
+		<tr>
+			<td> <b>Version 2:</b> March 15th 08 </td> <td> <img src = "play.jpg" /> <img src = "save.jpg" /> </td>
+		</tr>	
+
+		<tr>
+			<td> <b>Version 1:</b> March 02nd 08 </td> <td> <img src = "play.jpg" /> <img src = "save.jpg" /> </td>
+		</tr>	
+	
+		</table>
+	</div>
 	
 </div>
 </body>

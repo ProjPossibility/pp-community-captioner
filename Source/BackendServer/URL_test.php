@@ -17,6 +17,7 @@ $getRollbackList = $_GET["getRollbackList"];
 $url_id = $_GET["url_id"];
 $lock = $_GET["lock"];
 $domain = $_GET["domain"];
+$xml = $_POST["xml"];
 
 function doesCapExist($videoId){
 	
@@ -104,7 +105,7 @@ function setLock($videoId){
 			return "true";
 		}
 		else{
-			return "false";
+				return "false";
 		}
 	}
 	catch(Exception $e){
@@ -127,6 +128,19 @@ function releaseLock($videoId){
 	catch(Exception $e){
 		echo "alert('Message: ' ".$e->getMessage().");";
 	}
+}
+
+
+function setCaption($xmlId,$videoId){
+	$file_path = "captions/".substr($xmlId,0,1)."/".$videoId.".xml";
+	$file=fopen($file_path,"w");
+	if($file){
+		return "true";
+		fclose($file);
+	}
+	else
+		return "false";
+	
 }
 
 echo "alert('".$_GET["mode"]."');";
@@ -161,6 +175,11 @@ case "setLock" :
 case "releaseLock" :
 	echo "var cc_releaseLock = '" . releaseLock($url_id) . "';";
 	echo "alert(cc_releaseLock);";
+	break;
+
+case "setCaption" :
+	echo "var cc_setCaption = '" . setCaption($xml,$url_id) . "';";
+	echo "alert(cc_setCaption);";
 	break;
 }
 

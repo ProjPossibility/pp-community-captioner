@@ -60,9 +60,9 @@ function getCaption($videoId,$domain){
 		else
 		{
                     //didn't find any rows
-                    
+
                     //DEBUG
-                    echo "alert('didnt find any captions for videoID: ' .$videoId)";
+                    echo "alert('didnt find any captions for videoID: ".$videoId."');";
                     
                     return "";
 

@@ -46,15 +46,32 @@ function doesCapExist($videoId){
 	}
 }
 
-function getCaption($videoId){
+function getCaption($videoId,$domain){
 
 	try{
-		$query  = "SELECT XML_FilePath FROM Video where URL_ID like '%".$videoId."%'";
+                //need to make sure we are storing these right so we can use = instead of "like"
+		$query  = "SELECT XML_FilePath FROM Video where URL_ID like '%".$videoId.$domain."%'";
 		$result = mysql_query($query);
 
 		if($row = mysql_fetch_array($result, MYSQL_ASSOC)){
+                        //DEBUG
 			echo "alert('XML_FilePath: {$row['XML_FilePath']}');";
 		}
+		else
+		{
+                    //didn't find any rows
+                    
+                    //DEBUG
+                    echo "alert('didn't find any captions for videoID: ' .$videoId.$domain)";
+                    
+                    return "";
+
+                }
+
+                //we need to echo our caption xml file contents as a JS var
+                //using a fake one for testing for now
+                echo "var cc_strCaptions = '<?xml version=\"1.0\" encoding="UTF-8"?><tt xml:lang=\"en\" xmlns=\"http://www.w3.org/2006/04/ttaf1\"  xmlns:tts=\"http:\/\/www.w3.org/2006/04/ttaf1#styling\"><head><styling><style id=\"1\" tts:textAlign=\"right\"/><style id=\"2\" tts:color=\"transparent\"/>      <style id=\"3\" style=\"2\" tts:backgroundColor=\"white\"/><style id=\"4\" style=\"2 3\" tts:fontSize=\"20\"/></styling></head><body><div xml:lang=\"en\"><p begin=\"00:00:00.00\" dur=\"00:00:03.07\">Test Caption1</p></div></body></tt>';";
+
 
 		return $row['XML_FilePath'];
 	}
@@ -153,7 +170,7 @@ case "captionExist" :
 	break;	
 
 case "getCaption" :
-	echo "var cc_capXml = '" . getCaption($url_id) . "';";
+	echo "var cc_capXml = '" . getCaption($url_id,$domain) . "';";
 	echo "alert(cc_capXml);";
 	break;
 

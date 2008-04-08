@@ -62,7 +62,7 @@ function getCaption($videoId,$domain){
                     //didn't find any rows
                     
                     //DEBUG
-                    echo "alert('didn't find any captions for videoID: ' .$videoId.$domain)";
+                    echo "alert('didnt find any captions for videoID: ' .$videoId.$domain)";
                     
                     return "";
 

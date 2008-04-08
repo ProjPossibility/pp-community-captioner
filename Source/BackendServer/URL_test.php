@@ -50,7 +50,7 @@ function getCaption($videoId,$domain){
 
 	try{
                 //need to make sure we are storing these right and with $domain.$videoId so we can use = instead of "like"
-		$query  = "SELECT XML_FilePath FROM Video where URL_ID like '%".$videoId"%'";
+		$query  = "SELECT XML_FilePath FROM Video where URL_ID like '%".$videoId."%'";
 		$result = mysql_query($query);
 
 		if($row = mysql_fetch_array($result, MYSQL_ASSOC)){

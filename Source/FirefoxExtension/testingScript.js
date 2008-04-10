@@ -131,12 +131,12 @@ objTarget.appendChild(cc_writePlayerDivScript);
 
 //function to get the captions and re-write the divs
 var cc_getCaptionsJS = "function cc_getCations(){";
-cc_getCaptionsJS += "/*hide the CC tab*/";
+cc_getCaptionsJS += "/*hide the CC tab, only re-write the div if the cc tab is visible so we don't do it again*/";
 cc_getCaptionsJS += "if(document.getElementById('CC_tabDiv')!=null){";
-cc_getCaptionsJS += "document.getElementById('CC_tabDiv').style.visibility = 'hidden';}";
+cc_getCaptionsJS += "document.getElementById('CC_tabDiv').style.visibility = 'hidden';";
 cc_getCaptionsJS += "/*now re-write the playerDiv*/";
 cc_getCaptionsJS += "cc_writePlayerDiv();";
-cc_getCaptionsJS += "}";
+cc_getCaptionsJS += "}}";
 var cc_getCaptionsScript = document.createElement("script");
 cc_getCaptionsScript.type="text/javascript"
 cc_getCaptionsScript.innerHTML = cc_getCaptionsJS;

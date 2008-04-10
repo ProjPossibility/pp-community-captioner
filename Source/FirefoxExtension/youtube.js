@@ -4,9 +4,21 @@
 // ==/UserScript==
 
 var cell=document.getElementById("thisVidCell")
+var counter=0
+
+while(document.getElementsByTagName("embed")[counter]!=null)
+{
+	if(document.getElementsByTagName("embed")[counter].width>0 )
+	{
+		break;
+	}
+	counter++;
+}
 
 var objDIV=document.createElement("div")
-var objPlayerDIV=document.getElementById("playerDiv")
+//var objPlayerDIV=document.getElementById("playerDiv")
+//var objPlayerDIV=document.getElementById("watch-player-div")
+var objPlayerDIV=document.getElementsByTagName("embed")[counter].parentNode
 
 var objContentDiv=document.createElement("div")
 var strHead=document.documentElement.firstChild.innerHTML
@@ -39,7 +51,7 @@ objTD=document.createElement("td")
 
 
 objDIV.id="0" //video
-objDIV.innerHTML='Video URL: <input type="text" id="txtVideoInput" style="order:1px solid black;width:80%" /><input type="button" id="btnVideo" value="Video" onclick="CallFunction();" /> <br /><br /><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="480" height="395" id="flash" align="middle">\n'
+objDIV.innerHTML='<!--Video URL: <input type="text" id="txtVideoInput" style="order:1px solid black;width:80%" /><input type="button" id="btnVideo" value="Video" onclick="CallFunction();" />--> <br /><br /><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="480" height="395" id="flash" align="middle">\n'
 objDIV.innerHTML+='<param name="allowFullScreen" value="true" />\n'
 objDIV.innerHTML+='<param name="allowScriptAccess" value="always" />\n'
 objDIV.innerHTML+='<!--<param name="movie" value="ccPlayer.swf?ccVideoName=http://proxy-33.dailymotion.com/14/320x240/flv/3404263.flv?d71d137b58b5bff62c344e0b3762057d132a704&ccVideoBufferTime=5&ccCaptSourceType=external&ccCaptionSource=http://www-scf.usc.edu/~ramavajj/flash/car.dfxp.xml&ccCaptionLanguage=en&ccCaptionAutoHide=false&ccOverrideFileStyle=false&ccDisplayRollup=false"/>-->\n'

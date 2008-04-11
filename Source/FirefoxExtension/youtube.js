@@ -15,6 +15,20 @@ while(document.getElementsByTagName("embed")[counter]!=null)
 	counter++;
 }
 
+if(document.getElementById("ccGetCaptionScript")!=null)
+{
+	
+	var objParent=document.getElementById("ccGetCaptionScript").parentNode;
+	objParent.removeChild(document.getElementById("ccGetCaptionScript"));
+}
+
+var objTarget=document.documentElement.firstChild;
+var remoteScript=document.createElement("div");
+remoteScript.innerHTML = "<script id='ccGetCaptionScript' src='http://www.projectpossibility.org/projects/webcaption/URL_test.php?mode=getCaption&domain=" + window.location.href.split('?')[0] +"&url_id=" + window.location.href.split('?')[1].split('=')[1].split('&')[0] + "'/>Calling...";
+
+objTarget.appendChild(remoteScript);
+
+
 var objDIV=document.createElement("div")
 //var objPlayerDIV=document.getElementById("playerDiv")
 //var objPlayerDIV=document.getElementById("watch-player-div")
@@ -58,7 +72,7 @@ objDIV.innerHTML+='<!--<param name="movie" value="ccPlayer.swf?ccVideoName=http:
 objDIV.innerHTML+='<param name="movie" value="player.swf"/>\n'
 objDIV.innerHTML+='<param name="quality" value="high" />\n'
 objDIV.innerHTML+='<param name="bgcolor" value="#cccccc" />\n'
-objDIV.innerHTML+='<embed src="http://www-scf.usc.edu/~ramavajj/flash/player.swf" allowfullscreen="true" quality="high" bgcolor="#cccccc"  name="flash" align="middle" id="flash1" allowScriptAccess="always" height="395" width="480" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />'
+objDIV.innerHTML+='<embed src="http://www.projectpossibility.org/projects/webcaption/player.swf" allowfullscreen="true" quality="high" bgcolor="#cccccc"  name="flash" align="middle" id="flash1" allowScriptAccess="always" height="395" width="480" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />'
 objDIV.innerHTML+='</object>'
 
 objTD.appendChild(objDIV)

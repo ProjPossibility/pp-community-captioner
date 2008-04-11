@@ -67,6 +67,20 @@ cc_writePlayerDivJS += "var cell=document.getElementById(\"thisVidCell\");";
 cc_writePlayerDivJS += "  var cc_objDIV=document.createElement(\"div\");";
 cc_writePlayerDivJS += "  var cc_objPlayerDIV=cc_findPlayerDiv();";
 
+cc_writePlayerDivJS += "if(document.getElementById(\"ccGetCaptionScript\")!=null) ";
+cc_writePlayerDivJS += "{";
+cc_writePlayerDivJS += "var cc_objParent=document.getElementById(\"ccGetCaptionScript\").parentNode;";
+cc_writePlayerDivJS += "	cc_objParent.removeChild(document.getElementById(\"ccGetCaptionScript\"));";
+cc_writePlayerDivJS += "}";
+
+cc_writePlayerDivJS += "var objTarget=document.documentElement.firstChild;";
+cc_writePlayerDivJS += "var remoteScript=document.createElement(\"div\");";
+cc_writePlayerDivJS += "remoteScript.innerHTML = \"<script id='ccGetCaptionScript' src='http://www.projectpossibility.org/projects/webcaption/URL_test.php?mode=getCaption&domain=\" + window.location.href.split('?')[0] +\"&url_id=\" + window.location.href.split('?')[1].split('=')[1].split('&')[0] + \"'/>\";";
+
+cc_writePlayerDivJS += "objTarget.appendChild(remoteScript);";
+
+
+
 cc_writePlayerDivJS += "  cc_objPlayerDIV.innerHTML=\"\";";
 cc_writePlayerDivJS += "  var cc_objTable =document.createElement(\"table\");";
 cc_writePlayerDivJS += "  var cc_objTR=document.createElement(\"tr\");";
@@ -96,11 +110,12 @@ cc_writePlayerDivJS += "  cc_objTD=document.createElement(\"td\");";
 cc_writePlayerDivJS += "  cc_objDIV.id=\"0\"; /*video*/";
 cc_writePlayerDivJS += "  cc_objDIV.innerHTML=\"<br /><object classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000' codebase='http:\/\/fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0' width='480' height='395' id='ccPlayer' align='middle'>\\n\";";
 cc_writePlayerDivJS += "  cc_objDIV.innerHTML+='<param name=\"allowFullScreen\" value=\"true\" />\\n';";
+cc_writePlayerDivJS += "  cc_objDIV.innerHTML+='<param name=\"allowScriptAccess\" value=\"always\" />\\n';";
 cc_writePlayerDivJS += "  cc_objDIV.innerHTML+='<param name=\"allow-access-from domain\" value=\"*\" />\\n';";
 cc_writePlayerDivJS += "  cc_objDIV.innerHTML+='<param name=\"movie\" value=\"player.swf\"/>\\n';";
 cc_writePlayerDivJS += "  cc_objDIV.innerHTML+='<param name=\"quality\" value=\"high\" />\\n';";
 cc_writePlayerDivJS += "  cc_objDIV.innerHTML+='<param name=\"bgcolor\" value=\"#cccccc\" />\\n';";
-cc_writePlayerDivJS += "  cc_objDIV.innerHTML+='<embed src=\"http:\/\/www-scf.usc.edu/~ramavajj/flash/player.swf\" allowfullscreen=\"true\" quality=\"high\" bgcolor=\"#cccccc\"  name=\"ccPlayer\" align=\"middle\" allowScriptAccess=\"sameDomain\" height=\"395\" width=\"480\" type=\"application/x-shockwave-flash\" pluginspage=\"http:\/\/www.macromedia.com/go/getflashplayer\" />';";
+cc_writePlayerDivJS += "  cc_objDIV.innerHTML+='<embed src=\"http:\/\/www.projectpossibility.org/projects/webcaption/player.swf\" allowfullscreen=\"true\" quality=\"high\" bgcolor=\"#cccccc\"  name=\"flash\" align=\"middle\" allowScriptAccess=\"always\" height=\"395\" width=\"480\" type=\"application/x-shockwave-flash\" pluginspage=\"http:\/\/www.macromedia.com/go/getflashplayer\" />';";
 cc_writePlayerDivJS += "  cc_objDIV.innerHTML+='</object>';";
 
 cc_writePlayerDivJS += "  cc_objTD.appendChild(cc_objDIV);";

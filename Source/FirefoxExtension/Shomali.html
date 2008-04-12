@@ -89,13 +89,13 @@ body.section-3 #menu li#nav-3 a
 				
 				function update( num )
 				{
-				 for( var i = 1 ; i <= 3 ; i++ )
-				 {
-				 	document.getElementById( 'content' + i ).style.display = "none" ;
-				 }
+				 	for( var i = 1 ; i <= 3 ; i++ )
+				 	{
+				 		document.getElementById( 'content' + i ).style.display = "none" ;
+				 	}
 				
-				 document.getElementById( 'content' + num ).style.display = "inline" ;
-				 document.getElementsByTagName( "body" )[0].className = "section-" + num ;
+					document.getElementById( 'content' + num ).style.display = "inline" ;
+					document.getElementsByTagName( "body" )[0].className = "section-" + num ;
 				}
 
 
@@ -104,7 +104,7 @@ body.section-3 #menu li#nav-3 a
 					document.getElementById("divCaptions").removeChild( document.getElementById( id ) ) ;
 				}
 
-		var counter = 0 ;
+				var counter = 0 ;
 
 				function AddNewRow()
 				{
@@ -193,12 +193,11 @@ body.section-3 #menu li#nav-3 a
 				
 				function IncrementTime(id)
 				{
-						
 					var obj=document.getElementById(id)
 					var value=obj.innerHTML
 					var mm
 					var ss
-					
+
 					if(value=="")
 					{
 						mm=0;
@@ -207,21 +206,46 @@ body.section-3 #menu li#nav-3 a
 						obj.innerHTML=mm+":"+ss
 					}
 					else
+					{
+						if( id.substring( id.length - 1 ) == "S" )
 						{
-							mm=parseInt(value.split(":")[0],10)
-							ss=parseInt(value.split(":")[1],10)
-							
-							if(ss%59==0 && ss!=0)
-							{
-								ss=0;
-								mm++;
-							}
-							else
-								{
-									ss++;
-								}
-								obj.innerHTML=mm+":"+ss
+							objE = document.getElementById( id.substring( 0 , id.length - 1 ) + "E" ) ; 
+
+							valueE = objE.innerHTML ;
+							mmE = parseInt(valueE.split(":")[0],10)
+							ssE = parseInt(valueE.split(":")[1],10)	
 						}
+	
+						mm=parseInt(value.split(":")[0],10)
+						ss=parseInt(value.split(":")[1],10)
+							
+						if(ss%59==0 && ss!=0)
+						{
+							ss=0;
+							mm++;
+						}
+						else
+						{
+							ss++;
+						}
+
+						obj.innerHTML=mm+":"+ss
+						
+						if( id.substring( id.length - 1 ) == "S" )
+						{
+							if( mm > mmE )
+							{
+								mmE = mm ;
+								ssE = ss ;
+							}
+							else if( mm == mmE && ss > ssE )
+							{
+								ssE = ss ;
+							}
+
+							objE.innerHTML = mmE + ":" + ssE ;
+						}
+					}
 				}
 				
 				function DecrementTime(id)
@@ -240,31 +264,44 @@ body.section-3 #menu li#nav-3 a
 						obj.innerHTML=mm+":"+ss
 					}
 					else
-						{
-							mm=parseInt(value.split(":")[0],10)
-							ss=parseInt(value.split(":")[1],10)
-							
-							if(ss==0 && mm!=0)
-							{
-								ss=59;
-								
-								mm--;
-							}
-							else 
-								{
-									if(mm==0 && ss==0)
-									{
-										
-									}
-									else
-										{
-									ss--;		
-										}
-									
-								}
+					{
+						mm=parseInt(value.split(":")[0],10)
+						ss=parseInt(value.split(":")[1],10)
 
-								obj.innerHTML=mm+":"+ss
+						if( id.substring( id.length - 1 ) == "E" )
+						{
+							objS = document.getElementById( id.substring( 0 , id.length - 1 ) + "S" ) ; 
+
+							valueS = objS.innerHTML ;
+							mmS = parseInt(valueS.split(":")[0],10)
+							ssS = parseInt(valueS.split(":")[1],10)	
+
+							if( mmS == mm && ssS == ss )
+							{
+								return ;
+							}
 						}
+			
+						if(ss==0 && mm!=0)
+						{
+							ss=59;								
+							
+							mm--;
+						}
+						else 
+						{
+							if(mm==0 && ss==0)
+							{
+							}
+							else
+							{
+								ss--;		
+							}
+								
+						}
+				
+						obj.innerHTML= mm + ":" + ss
+					}
 				}
 				
     function Change(id,type,category)

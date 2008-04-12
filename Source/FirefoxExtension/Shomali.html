@@ -98,6 +98,12 @@ body.section-3 #menu li#nav-3 a
 				 document.getElementsByTagName( "body" )[0].className = "section-" + num ;
 				}
 
+
+				function removeRow( id )
+				{
+					document.getElementById("divCaptions").removeChild( document.getElementById( id ) ) ;
+				}
+
 		var counter = 0 ;
 
 				function AddNewRow()
@@ -111,6 +117,8 @@ body.section-3 #menu li#nav-3 a
 					
 					objTR=document.createElement("tr")
 					objTD=document.createElement("td")
+					
+					objDIV.id = counter + ":R" ;
 					
 					objTD.innerHTML="Start: "
 					objTD.setAttribute("style" , "font-family: courier ; font-weight: bold ; font-size : 12px")
@@ -148,7 +156,7 @@ body.section-3 #menu li#nav-3 a
 
 					objA=document.createElement("a")
 					objA.id = counter+":A"
-					objA.setAttribute( 'href' , "" )
+					objA.setAttribute( 'href' , "javascript:removeRow('" + objDIV.id + "')" )
 					objA.setAttribute( 'style' , "text-decoration: none ; font-family: courier ; font-size: 24px ; font-weight: bold ;" )
 					objTD.appendChild(objA)
 

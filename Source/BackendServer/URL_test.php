@@ -207,12 +207,13 @@ function setCaption($xmlId,$videoId,$captionXml){
 	
 }
 
-echo "alert('".$_GET["mode"]."');";
+echo "alert('php called mode: ".$_GET["mode"]."');";
 
 switch($_GET["mode"]) {
 
 case "captionExist" : 		
-	echo "var cc_doesVidExist = '" . doesCapExist($url_id) . "';"; 
+	echo "var cc_doesVidExist = '" . doesCapExist($url_id) . "';";
+        echo "insertCaptionButtons(cc_doesVidExist);";
 	//echo "alert(cc_doesVidExist);";
 	break;	
 

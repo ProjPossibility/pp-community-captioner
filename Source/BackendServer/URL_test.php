@@ -4,13 +4,13 @@ $dbhost = 'mysql.projectpossibility.org:3306';
 $dbuser = 'webcaption';
 $dbpass = 'webcaptionteam';
 $dbname = 'webcaption';
+$file_path = 'http://www.projectpossibility.org/projects/webcaption/';
 
 $conn = mysql_connect($dbhost, $dbuser, $dbpass) or die ('Error connecting to mysql' . mysql_error());
 
 mysql_select_db($dbname);
 
 $mode = $_GET["mode"];
-$captions = $_GET["captions"];
 $useVersion = $_GET["version"];
 $getVersion = $_GET["getVersion"];
 $getRollbackList = $_GET["getRollbackList"];
@@ -18,6 +18,9 @@ $url_id = $_GET["url_id"];
 $lock = $_GET["lock"];
 $domain = $_GET["domain"];
 $xml = $_POST["xml"];
+$caption = $_POST["caption"];
+//$caption = base64_decode($_GET["caption"]);
+
 
 function doesCapExist($videoId){
 	
@@ -73,7 +76,7 @@ function getCaption($videoId,$domain){
                 echo "var cc_strCaptions = '<?xml version=\"1.0\" encoding=\"UTF-8\"?><tt xml:lang=\"en\" xmlns=\"http://www.w3.org/2006/04/ttaf1\"  xmlns:tts=\"http:\/\/www.w3.org/2006/04/ttaf1#styling\"><head><styling><style id=\"1\" tts:textAlign=\"right\"/><style id=\"2\" tts:color=\"transparent\"/>      <style id=\"3\" style=\"2\" tts:backgroundColor=\"white\"/><style id=\"4\" style=\"2 3\" tts:fontSize=\"20\"/></styling></head><body><div xml:lang=\"en\"><p begin=\"00:00:00.00\" dur=\"00:00:03.07\">Test Caption1</p></div></body></tt>';";
 
 
-		return $row['XML_FilePath'];
+		return $row['XML_FilePath'];//Prefix to it the full file path
 	}
 	catch(Exception $e){
 	                echo "alert('Message: ' ".$e->getMessage().");";
@@ -147,16 +150,60 @@ function releaseLock($videoId){
 	}
 }
 
+function mkdir_recursive($pathname, $mode)
+{
+	is_dir(dirname($pathname)) || mkdir_recursive(dirname($pathname), $mode);
+        return is_dir($pathname) || @mkdir($pathname, $mode);
+}
 
-function setCaption($xmlId,$videoId){
-	$file_path = "captions/".substr($xmlId,0,1)."/".$videoId.".xml";
-	$file=fopen($file_path,"w");
-	if($file){
-		return "true";
-		fclose($file);
+
+function setCaption($xmlId,$videoId,$captionXml){
+	try
+	{
+		$file_path = '.'.DIRECTORY_SEPARATOR."captions".DIRECTORY_SEPARATOR.substr($videoId,0,1).DIRECTORY_SEPARATOR;
+		
+		$mode = 0777;
+	echo "&&&&&&&&&&&".getcwd(); 
+		
+    
+	  chdir('captions');
+	  if(@mkdir(substr($videoId,0,1),$mode) || is_dir(substr($videoId,0,1)))
+	  {
+
+	  	chdir(substr($videoId,0,1));
+	  	
+	  	if(@mkdir($videoId, $mode) || is_dir($videoId))
+			{
+				chdir($videoId);
+				echo '.......... '.getcwd();
+				echo 'success in creaging';
+				$file_path = "captions/".substr($videoId,0,1)."/".$videoId.".xml";
+				$file=fopen($videoId.'.xml',"w");
+				echo "alert(".$captionXml.");";
+				fwrite($file,$captionXml);
+				//if($file){
+				//	return "true";
+				//	fclose($file);
+				//}
+				//else
+				//	return "false";
+				fclose($file);
+			}
+			else
+			{
+				echo 'lalala    ';
+			}
+	  }
+	  
+		
+		//if(mkdir_recursive($filepath, $mode))
+		
 	}
-	else
-		return "false";
+	catch(Exception $e)
+	{
+		echo  "........".$e->getMessage()."...";
+	}
+
 	
 }
 
@@ -170,8 +217,8 @@ case "captionExist" :
 	break;	
 
 case "getCaption" :
-	echo "var cc_capXml = '" . getCaption($url_id,$domain) . "';";
-	echo "alert(cc_capXml);";
+	echo "var cc_capXml = '" .$file_path.getCaption($url_id,$domain) . "';alert(cc_capXml);";
+	echo "\nfunction as_to_js(){"."\n\treturn cc_capXml;"."\n}"."\nfunction CaptionURLRetrieved(){\n\ndocument.flash.CaptionURLRetrieved(cc_capXml);}\nCaptionURLRetrieved();";
 	break;
 
 case "getVersion" :
@@ -195,13 +242,22 @@ case "releaseLock" :
 	break;
 
 case "setCaption" :
-	echo "var cc_setCaption = '" . setCaption($xml,$url_id) . "';";
-	echo "alert(cc_setCaption);";
+
+	try
+	{
+				//echo $url_id;
+				var_dump($_POST);
+		setCaption("test",$url_id,$caption);
+		//echo "var cc_setCaption = '" . setCaption($xml,$url_id,$caption) . "';";
+		echo "alert(cc_setCaption);";
+	}
+	catch(Exception $e)
+	{
+		echo '******'.$e->getMessage().'*****';
+	}
+	
 	break;
 }
-
-
-
 
 mysql_close($conn);
 ?>

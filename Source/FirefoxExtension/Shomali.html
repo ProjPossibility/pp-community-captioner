@@ -179,6 +179,8 @@ body.section-3 #menu li#nav-3 a
 					var currentMin = 0 ;
 					var currentSec = 0 ;
 
+					var crap = "" ;
+
 					arrIDs[arrIDs.length] = new Option( "S" , "begin" ) ;
 					arrIDs[arrIDs.length] = new Option( "E" , "end" ) ;
 					arrIDs[arrIDs.length] = new Option( "CAPTION" , "CAPTION" );
@@ -195,7 +197,7 @@ body.section-3 #menu li#nav-3 a
                
                							if( document.getElementById( strComponentIDs ).tagName != "INPUT" )
 			                			{
-                    							crap += arrIDs[innerCounter].value + '="' + document.getElementById( strComponentIDs ).innerHTML + '" ' ;
+                    							crap += document.getElementById( strComponentIDs ).innerHTML ;
        						         	}
 
 						                innerCounter++;
@@ -206,6 +208,8 @@ body.section-3 #menu li#nav-3 a
          
 						strID = iCounter + ":S" ;
 			        	}
+
+					alert( crap );
 
 					return isValid ;
 				}
@@ -241,6 +245,7 @@ body.section-3 #menu li#nav-3 a
 					objDIV=document.createElement("div")
 					objDIV.name = "CCaption"
 					objDIV.setAttribute( "style" , "padding : 10px" )
+				
 					objTable=document.createElement("table")
 					objTable.id="tblCaption:"+counter;
 
@@ -440,46 +445,44 @@ body.section-3 #menu li#nav-3 a
 					}
 				}
 				
-    function Change(id,type,category)
-    {
-        
-        var obj=document.getElementById(id)
-        var newObj
+				function Change( id , type , category )
+    				{ 
+        				var obj=document.getElementById( id ) ;
+        				var newObj ;
             
-        if(obj.type!="textarea" && obj.type!="text")
-        {
+        				if(obj.type!="textarea" && obj.type!="text")
+        				{
+					        newObj=document.createElement( type ) ;
             
+	    					if( type == "textarea" )
+            					{
+					                newObj.rows = "5" ;
+                					newObj.cols = "50" ;
+            					}
+					        else
+            					{
+					                newObj.type = "text" ;
+                					newObj.style.width = "95%" ;       
+            					}
             
-            newObj=document.createElement(type)
-            if(type=="textarea")
-            {
-                newObj.rows="5"
-                newObj.cols="50"
-            }
-            else
-            {
-                newObj.type="text"
-                newObj.style.width="95%"       
-            }
-            newObj.value=obj.innerHTML
-            newObj.id=id
+						newObj.value = obj.innerHTML ;
+            					newObj.id = id ;
             
-            newObj.onblur=function(){Change(id,type,category)}
-            newObj.className="txt"
-            obj.parentNode.replaceChild(newObj,obj)
-        }
-        else
-        {
+          					newObj.onblur = function(){ Change( id , type , category ) } ;
+       						newObj.className="txt" ;
+            					obj.parentNode.replaceChild( newObj , obj ) ;
+        				}
+				        else
+        				{
+			        	    	newObj = document.createElement("a") ;
+       					    	newObj.id = id ;
+			        	    	newObj.innerHTML = obj.value ;
+        				    	newObj.href = "javascript:Change('"+id+"','"+type+"','"+category+"')" ;
             
-            newObj=document.createElement("a")
-            newObj.id=id
-            newObj.innerHTML=obj.value
-            newObj.href="javascript:Change('"+id+"','"+type+"','"+category+"')"
-            
-            newObj.style.color="Black"
-            obj.parentNode.replaceChild(newObj,obj)
-        }
-    }
+          					newObj.style.color = "Black" ;
+            					obj.parentNode.replaceChild( newObj , obj ) ;
+        				}
+    				}
 				
 </script>
 

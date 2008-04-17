@@ -179,8 +179,6 @@ body.section-3 #menu li#nav-3 a
 					var currentMin = 0 ;
 					var currentSec = 0 ;
 
-					var crap = "" ;
-
 					arrIDs[arrIDs.length] = new Option( "S" , "begin" ) ;
 					arrIDs[arrIDs.length] = new Option( "E" , "end" ) ;
 					arrIDs[arrIDs.length] = new Option( "CAPTION" , "CAPTION" );
@@ -189,27 +187,47 @@ body.section-3 #menu li#nav-3 a
 	        			{
 						if( document.getElementById( strID ) != null )
 						{
-					            	innerCounter = 0 ;
-		        		    
-					            	while( innerCounter < arrIDs.length )
-        			    			{
-               					 		strComponentIDs = iCounter + ":" + arrIDs[innerCounter].text ;
+       					 		strComponentIDs = iCounter + ":S" ;
                
-               							if( document.getElementById( strComponentIDs ).tagName != "INPUT" )
-			                			{
-                    							crap += document.getElementById( strComponentIDs ).innerHTML ;
-       						         	}
+                    					currentMin = document.getElementById( strComponentIDs ).innerHTML.split(":")[0] ;
+                    					currentSec = document.getElementById( strComponentIDs ).innerHTML.split(":")[1] ;
 
-						                innerCounter++;
-        					    	}
+							if( oldMin <= currentMin )
+							{
+								if( oldSec <= currentSec )
+								{
+									document.getElementById( "tblCaption:" + iCounter ).bgcolor = "white" ;
+								}
+								else
+								{
+
+									document.getElementById( "tblCaption:" + iCounter ).bgcolor = "red" ;
+
+									isValid = false ;
+				
+									break ;
+								}
+							}
+							else
+							{
+
+								document.getElementById( "tblCaption:" + iCounter ).bgcolor = "red" ;
+
+								isValid = false ;
+					
+								break ;
+							}
+
+       					 		strComponentIDs = iCounter + ":E" ;
+               
+                    					oldMin = document.getElementById( strComponentIDs ).innerHTML.split(":")[0] ;
+                    					oldSec = document.getElementById( strComponentIDs ).innerHTML.split(":")[1] ;
 						}
             
          			   		iCounter++;
          
 						strID = iCounter + ":S" ;
 			        	}
-
-					alert( crap );
 
 					return isValid ;
 				}

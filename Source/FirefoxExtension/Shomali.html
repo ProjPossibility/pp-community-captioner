@@ -89,46 +89,51 @@ body.section-3 #menu li#nav-3 a
 
 				function CreateCaptions()
     				{
-				        var counter=0;
-        				var strID=counter+":"+"S";
+				        var iCounter = 0 ;
+        				var strID = iCounter + ":S" ;
+
 	        			var strXML='<?xml version="1.0" encoding="UTF-8"?>';
-        				var strComponentIDs=""
-		        		var innerCounter=0;
+        				var strComponentIDs = "" ;
+		        		var innerCounter = 0 ;
         
-				        var arrIDs=new Array();
-					arrIDs[arrIDs.length]=new Option("S","begin");
-					arrIDs[arrIDs.length]=new Option("E","end");
-					arrIDs[arrIDs.length]=new Option("CAPTION","CAPTION");
+				        var arrIDs = new Array();
+
+					arrIDs[arrIDs.length] = new Option("S","begin");
+					arrIDs[arrIDs.length] = new Option("E","end");
+					arrIDs[arrIDs.length] = new Option("CAPTION","CAPTION");
         
 		        		strXML+='<?xml version="1.0" encoding="UTF-8"?><tt xml:lang="en" xmlns="http://www.w3.org/2006/04/ttaf1" xmlns:tts="http://www.w3.org/2006/04/ttaf1#styling"><head><styling><style id="b1" tts:color="#cccc00"/></styling></head><body>'
         				strXML+='<div xml:lang="en" style="b1">'
         
-				        while(document.getElementById(strID)!=null)
+				        while( iCounter < counter )
 	        			{
-				            	innerCounter=0;
-		        		    	strXML+='<p ';
+						if( document.getElementById(strID) != null )
+						{
+					            	innerCounter=0;
+			        		    	strXML+='<p ';
 
-				            	while(innerCounter<arrIDs.length)
-        		    			{
-               				 		strComponentIDs=counter+":"+arrIDs[innerCounter].text;
+					            	while(innerCounter<arrIDs.length)
+        			    			{
+               					 		strComponentIDs = iCounter + ":" + arrIDs[innerCounter].text;
                
-               						if(document.getElementById(strComponentIDs).tagName!="INPUT")
-			                		{
-                    						strXML+=arrIDs[innerCounter].value+'="'+document.getElementById(strComponentIDs).innerHTML+'" ';
-       					         	}
-			        		        else
-        	        				{
-                			    			strXML+='>'+ document.getElementById(strComponentIDs).value;
-			                		}
+             	  						if(document.getElementById(strComponentIDs).tagName!="INPUT")
+			                			{
+                    							strXML += arrIDs[innerCounter].value+'="'+document.getElementById(strComponentIDs).innerHTML+'" ';
+       						         	}
+			        			        else
+        	        					{
+                				    			strXML += '>'+ document.getElementById(strComponentIDs).value;
+				                		}
+	
+						                innerCounter++;
+        					    	}
+            
+							strXML+='</p>';            
+						}
 
-					                innerCounter++;
-        				    	}
-            
-						strXML+='</p>';
-            
-         			   		counter++;
+         			   		iCounter ++ ;
          
-						strID=counter+":"+arrIDs[0].text;
+						strID = iCounter + ":" + arrIDs[0].text;
 			        	}
 
 	        			strXML+="</div></body></tt>";
@@ -145,7 +150,11 @@ body.section-3 #menu li#nav-3 a
 					{
 						if( areCaptionsValid() )
 						{
-							CreateCaptions() ;
+							alert( CreateCaptions() ) ;
+						}
+						else
+						{
+							alert( "Invalid Caption Timing!" ) ;
 						}
 					}
 
@@ -162,9 +171,13 @@ body.section-3 #menu li#nav-3 a
 	        			var strComponentIDs = "" ;
 		        		var innerCounter = 0 ;
         
-				        var arrIDs=new Array() ;
+				        var arrIDs = new Array() ;
 
-					var crap = "" ;
+					var oldMin = 0 ;
+					var oldSec = 0 ;
+
+					var currentMin = 0 ;
+					var currentSec = 0 ;
 
 					arrIDs[arrIDs.length] = new Option( "S" , "begin" ) ;
 					arrIDs[arrIDs.length] = new Option( "E" , "end" ) ;
@@ -193,8 +206,6 @@ body.section-3 #menu li#nav-3 a
          
 						strID = iCounter + ":S" ;
 			        	}
-
-					alert( crap ) ;
 
 					return isValid ;
 				}

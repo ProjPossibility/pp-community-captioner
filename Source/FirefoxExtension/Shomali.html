@@ -147,26 +147,6 @@ body.section-3 #menu li#nav-3 a
 					document.getElementsByTagName( "body" )[0].className = "section-" + num ;
 				}
 
-				function editRow( id )
-				{
-					for( i = 0 ; i < myList.length ; i ++ )
-					{
-
-						if( id == myList[ i ].id )
-						{
-							myList[ i ].setAttribute( "style" , "color : black" ) ;
-
-							EnableChildren(myList[i]);
-						}
-						else
-						{
-							myList[ i ].setAttribute( "style" , "color : grey" ) ;
-
-							DisableChildren(myList[i]);
-						}
-					}
-				}
-
 				function removeRow( id )
 				{
 					document.getElementById("divCaptions").removeChild( document.getElementById( id ) ) ;
@@ -188,8 +168,6 @@ body.section-3 #menu li#nav-3 a
 										
 					objTR=document.createElement("tr")
 					objTD=document.createElement("td")
-
-					myList[ myList.length ] = objTable
 					
 					objDIV.id = counter + ":R" ;
 					

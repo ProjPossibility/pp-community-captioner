@@ -135,96 +135,6 @@ body.section-3 #menu li#nav-3 a
         	
 					return strXML;
     				}
-
-				function DisableChildren(obj)
-				{
-					var id=obj.id.split(":")[1];
-					var arrIDs=new Array();
-					arrIDs[arrIDs.length]="S";
-					arrIDs[arrIDs.length]="E";
-					arrIDs[arrIDs.length]="SINC";
-					arrIDs[arrIDs.length]="SDEC";
-					arrIDs[arrIDs.length]="EINC";
-					arrIDs[arrIDs.length]="EDEC";
-					arrIDs[arrIDs.length]="CAPTION";
-					var counter=0;
-					var objObj;
-	
-					var strID="";
-
-					while(counter<arrIDs.length)
-					{
-						strID=id+":"+arrIDs[counter];
-						objObj=document.getElementById(strID);
-	
-						if( objObj.tagName == "IMG" )
-						{
-							objObj.attributes[0].nodeValue="" ;
-						}
-						else
-						{		
-							objObj.disabled = true;
-						}
-
-						counter++;
-					}
-				}
-
-				function EnableChildren(obj)
-				{
-					var id=obj.id.split(":")[1];
-					var arrIDs=new Array();
-					arrIDs[arrIDs.length]="S";
-					arrIDs[arrIDs.length]="E";
-					arrIDs[arrIDs.length]="SINC";
-					arrIDs[arrIDs.length]="SDEC";
-					arrIDs[arrIDs.length]="EINC";
-					arrIDs[arrIDs.length]="EDEC";
-					arrIDs[arrIDs.length]="CAPTION";
-					var counter=0;
-					var objObj;
-
-					var strID="";
-					var strScript="";
-
-
-					while(counter<arrIDs.length)
-					{
-						strID=id+":"+arrIDs[counter];
-						objObj=document.getElementById(strID);
-
-						if( objObj.tagName == "IMG" )
-						{
-							if( arrIDs[ counter ] == "SINC" )
-							{
-								strScript='javascript:IncrementTime(\"' + id + ':S\")' ;
-								objObj.attributes[0].nodeValue= strScript;
-							}
-							else if( arrIDs[ counter ] == "SDEC" )
-							{
-								strScript='javascript:DecrementTime(\"' + id + ':S\")' ;
-								objObj.attributes[0].nodeValue= strScript;
-							}
-							else if( arrIDs[ counter ] == "EINC" )
-							{
-								strScript='javascript:IncrementTime(\"' + id + ':E\")' ;
-								objObj.attributes[0].nodeValue= strScript;
-							}
-							else if( arrIDs[ counter ] == "EDEC" )
-							{
-								strScript='javascript:DecrementTime(\"' + id + ':E\")' ;
-								objObj.attributes[0].nodeValue= strScript;
-							}
-						}
-						else
-						{		
-							objObj.disabled = false;
-						}
-
-						counter++;
-					}
-				}
-
 				
 				function update( num )
 				{
@@ -264,18 +174,8 @@ body.section-3 #menu li#nav-3 a
 
 				var counter = 0 
 
-				myList = new Array() ;
-
-
 				function AddNewRow()
 				{
-					for( i = 0 ; i < myList.length ; i ++ )
-					{
-						myList[ i ].setAttribute( "style" , "color : grey" ) ;
-
-						DisableChildren(myList[i]);
-					}
-
 					var objTable,objTBody,objTR,objTD,objDIV;
 					
 					objDIV=document.createElement("div")
@@ -339,24 +239,6 @@ body.section-3 #menu li#nav-3 a
 
 					objT=document.createTextNode("X")
 					objA.appendChild(objT)
-					
-
-					
-					objTD=document.createElement("td")
-					objTD.setAttribute( 'rowspan' , 2 )
-					objTD.setAttribute( 'style' , 'padding : 10px' )
-					objTR.appendChild(objTD)
-
-
-					objA=document.createElement("a")
-					objA.id = counter+":Z"
-					objA.setAttribute( 'href' , "javascript:editRow('" + objTable.id + "')" )
-					objA.setAttribute( 'style' , "font-size: 12px ;" )
-					objTD.appendChild(objA)
-
-					objT=document.createTextNode("Edit")
-					objA.appendChild(objT)
-					
 
 
 					objTBody.appendChild(objTR)

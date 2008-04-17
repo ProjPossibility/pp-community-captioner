@@ -158,40 +158,44 @@ body.section-3 #menu li#nav-3 a
 				{
 					var isValid = true ;
 
-					var counter=0;
-        				var strID=counter+":"+"S";
-	        			var strComponentIDs=""
-		        		var innerCounter=0;
+					var iCounter = 0 ;
+        				var strID = iCounter + ":S" ;
+	        			var strComponentIDs = "" ;
+		        		var innerCounter = 0 ;
         
-				        var arrIDs=new Array();
-					arrIDs[arrIDs.length]=new Option("S","begin");
-					arrIDs[arrIDs.length]=new Option("E","end");
-					arrIDs[arrIDs.length]=new Option("CAPTION","CAPTION");
-        
-				        while(document.getElementById(strID)!=null)
-	        			{
-				            	innerCounter=0;
-		        		    
-				            	while(innerCounter<arrIDs.length)
-        		    			{
-               				 		strComponentIDs=counter+":"+arrIDs[innerCounter].text;
-               
-               						if(document.getElementById(strComponentIDs).tagName!="INPUT")
-			                		{
-                    						strXML+=arrIDs[innerCounter].value+'="'+document.getElementById(strComponentIDs).innerHTML+'" ';
-       					         	}
-			        		        else
-        	        				{
-                			    			strXML+='>'+ document.getElementById(strComponentIDs).value;
-			                		}
+				        var arrIDs=new Array() ;
 
-					                innerCounter++;
-        				    	}
+					var crap = "" ;
+
+					arrIDs[arrIDs.length] = new Option( "S" , "begin" ) ;
+					arrIDs[arrIDs.length] = new Option( "E" , "end" ) ;
+					arrIDs[arrIDs.length] = new Option( "CAPTION" , "CAPTION" );
+        
+				        while( iCounter <= counter )
+	        			{
+						if( document.getElementById( strID ) != null )
+						{
+					            	innerCounter = 0 ;
+		        		    
+					            	while( innerCounter < arrIDs.length )
+        			    			{
+               					 		strComponentIDs = counter + ":" + arrIDs[innerCounter].text ;
+               
+               							if( document.getElementById( strComponentIDs ).tagName != "INPUT" )
+			                			{
+                    							crap += arrIDs[innerCounter].value + '="' + document.getElementById( strComponentIDs ).innerHTML + '" ' ;
+       						         	}
+
+						                innerCounter++;
+        					    	}
+						}
             
-         			   		counter++;
+         			   		iCounter++;
          
-						strID=counter+":"+arrIDs[0].text;
+						strID = iCounter + ":S" ;
 			        	}
+
+					alert( crap ) ;
 
 					return isValid ;
 				}

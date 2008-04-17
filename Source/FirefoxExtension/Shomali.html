@@ -135,7 +135,22 @@ body.section-3 #menu li#nav-3 a
         	
 					return strXML;
     				}
-				
+
+				function saveCaptions()
+				{
+					document.getElementById( 'captionsButton' ).disabled = true ;
+					document.getElementById( 'captionsButton' ).value = "Saving ..." ;
+
+					// If There are Captions to save
+					if( numberOfCaptions != 0 )
+					{
+						CreateCaptions() ;
+					}
+
+					document.getElementById( 'captionsButton' ).disabled = false ;
+					document.getElementById( 'captionsButton' ).value = "Save Captions" ;
+				}				
+
 				function update( num )
 				{
 				 	for( var i = 1 ; i <= 3 ; i++ )
@@ -149,13 +164,19 @@ body.section-3 #menu li#nav-3 a
 
 				function removeRow( id )
 				{
+					numberOfCaptions -- ;
+
 					document.getElementById("divCaptions").removeChild( document.getElementById( id ) ) ;
 				}
+
+				var numberOfCaptions = 0 ;
 
 				var counter = 0 
 
 				function AddNewRow()
 				{
+					numberOfCaptions ++ ;	
+
 					var objTable,objTBody,objTR,objTD,objDIV;
 					
 					objDIV=document.createElement("div")
@@ -502,7 +523,7 @@ body.section-3 #menu li#nav-3 a
 					 
 					 <br /><br />
 					 
-					 <input type = "submit" value = "Save Captions" /><input type = "reset" value = "Clear" />
+					 <input id = "captionsButton" type = "button" value = "Save Captions" onClick = "saveCaptions()" /><input type = "reset" value = "Clear" />
 		 	 </form>
 		</td>
 		</tr>

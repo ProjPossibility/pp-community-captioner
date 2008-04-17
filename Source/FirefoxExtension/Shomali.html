@@ -141,10 +141,9 @@ body.section-3 #menu li#nav-3 a
 					document.getElementById( 'captionsButton' ).disabled = true ;
 					document.getElementById( 'captionsButton' ).value = "Saving ..." ;
 
-					if( areCaptionsValid() )
+					if( numberOfCaptions != 0 )
 					{
-						// If There are Captions to save
-						if( numberOfCaptions != 0 )
+						if( areCaptionsValid() )
 						{
 							CreateCaptions() ;
 						}
@@ -179,7 +178,7 @@ body.section-3 #menu li#nav-3 a
 		        		    
 					            	while( innerCounter < arrIDs.length )
         			    			{
-               					 		strComponentIDs = counter + ":" + arrIDs[innerCounter].text ;
+               					 		strComponentIDs = iCounter + ":" + arrIDs[innerCounter].text ;
                
                							if( document.getElementById( strComponentIDs ).tagName != "INPUT" )
 			                			{

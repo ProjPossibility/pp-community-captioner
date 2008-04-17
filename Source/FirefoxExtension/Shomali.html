@@ -141,15 +141,22 @@ body.section-3 #menu li#nav-3 a
 					document.getElementById( 'captionsButton' ).disabled = true ;
 					document.getElementById( 'captionsButton' ).value = "Saving ..." ;
 
-					// If There are Captions to save
-					if( numberOfCaptions != 0 )
+					if( areCaptionsValid() )
 					{
-						CreateCaptions() ;
+						// If There are Captions to save
+						if( numberOfCaptions != 0 )
+						{
+							CreateCaptions() ;
+						}
 					}
 
 					document.getElementById( 'captionsButton' ).disabled = false ;
 					document.getElementById( 'captionsButton' ).value = "Save Captions" ;
 				}				
+
+				function areCaptionsValid()
+				{
+				}
 
 				function update( num )
 				{

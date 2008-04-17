@@ -136,6 +136,7 @@ body.section-3 #menu li#nav-3 a
 					var objObj;
 
 					var strID="";
+					var strScript="";
 
 
 					while(counter<arrIDs.length)
@@ -147,19 +148,23 @@ body.section-3 #menu li#nav-3 a
 						{
 							if( arrIDs[ counter ] == "SINC" )
 							{
-								objObj.attributes[0].nodeValue= 'javascript:IncrementTime(\"" + id + ":S\")' ;
+								strScript='javascript:IncrementTime(\"' + id + ':S\")' ;
+								objObj.attributes[0].nodeValue= strScript;
 							}
 							else if( arrIDs[ counter ] == "SDEC" )
 							{
-								objObj.attributes[0].nodeValue= 'javascript:DecremenTime(\"" + id + ":S\")' ;
+								strScript='javascript:DecrementTime(\"' + id + ':S\")' ;
+								objObj.attributes[0].nodeValue= strScript;
 							}
 							else if( arrIDs[ counter ] == "EINC" )
 							{
-								objObj.attributes[0].nodeValue= 'javascript:IncrementTime(\"" + id + ":E\")' ;
+								strScript='javascript:IncrementTime(\"' + id + ':E\")' ;
+								objObj.attributes[0].nodeValue= strScript;
 							}
 							else if( arrIDs[ counter ] == "EDEC" )
 							{
-								objObj.attributes[0].nodeValue= 'javascript:DecremenTime(\"" + id + ":E\")' ;
+								strScript='javascript:DecrementTime(\"' + id + ':E\")' ;
+								objObj.attributes[0].nodeValue= strScript;
 							}
 						}
 						else
@@ -185,6 +190,7 @@ body.section-3 #menu li#nav-3 a
 
 				function editRow( id )
 				{
+					debugger
 					for( i = 0 ; i < myList.length ; i ++ )
 					{
 
@@ -334,6 +340,8 @@ body.section-3 #menu li#nav-3 a
 				
 				function IncrementTime(id)
 				{
+
+					debugger
 
 					var obj=document.getElementById(id)
 					var value=obj.innerHTML

@@ -154,7 +154,7 @@ body.section-3 #menu li#nav-3 a
 						}
 						else
 						{
-							alert( "Invalid Caption Timing!" ) ;
+							alert( "Invalid Caption Timing! \nStart Timing is Less than Previous End Timing" ) ;
 						}
 					}
 
@@ -196,12 +196,12 @@ body.section-3 #menu li#nav-3 a
 							{
 								if( oldSec <= currentSec )
 								{
-									document.getElementById( "tblCaption:" + iCounter ).bgColor = "white" ;
+									document.getElementById( "tblCaption:" + iCounter ).borderColor = "white" ;
 								}
 								else
 								{
 
-									document.getElementById( "tblCaption:" + iCounter ).bgColor = "red" ;
+									document.getElementById( "tblCaption:" + iCounter ).borderColor = "red" ;
 
 									isValid = false ;
 				
@@ -211,7 +211,7 @@ body.section-3 #menu li#nav-3 a
 							else
 							{
 
-								document.getElementById( "tblCaption:" + iCounter ).bgColor = "red" ;
+								document.getElementById( "tblCaption:" + iCounter ).borderColor = "red" ;
 
 								isValid = false ;
 					

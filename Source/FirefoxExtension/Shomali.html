@@ -87,6 +87,32 @@ body.section-3 #menu li#nav-3 a
 
 <script language="JavaScript" type="text/javascript">
 
+
+				function GetXmlHttpObject()
+				{
+					var xmlHttp=null;
+					
+					try
+  					{
+  						// Firefox, Opera 8.0+, Safari
+  						xmlHttp=new XMLHttpRequest();
+  					}
+					catch (e)
+  					{
+  						// Internet Explorer
+  						try
+    						{
+    							xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+    						}
+  						catch (e)
+    						{
+    							xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+    						}
+  					}
+				
+					return xmlHttp;
+				}
+
 				function CreateCaptions()
     				{
 				        var iCounter = 0 ;
@@ -192,7 +218,7 @@ body.section-3 #menu li#nav-3 a
                     					currentMin = document.getElementById( strComponentIDs ).innerHTML.split(":")[0] ;
                     					currentSec = document.getElementById( strComponentIDs ).innerHTML.split(":")[1] ;
 
-							if( oldMin <= currentMin )
+							if( oldMin == currentMin )
 							{
 								if( oldSec <= currentSec )
 								{
@@ -203,16 +229,16 @@ body.section-3 #menu li#nav-3 a
 									document.getElementById( "tblCaption:" + iCounter ).bgColor = "#FFCC99" ;
 
 									isValid = false ;
-				
+
 									break ;
 								}
 							}
-							else
+							else if( oldMin > currentMin )
 							{
 								document.getElementById( "tblCaption:" + iCounter ).bgColor = "#FFCC99" ;
 
 								isValid = false ;
-					
+
 								break ;
 							}
 
@@ -252,7 +278,7 @@ body.section-3 #menu li#nav-3 a
 
 				var counter = 0 
 
-				function AddNewRow()
+				function AddNewRow( start , end , caption )
 				{
 					numberOfCaptions ++ ;	
 
@@ -278,7 +304,7 @@ body.section-3 #menu li#nav-3 a
 
 					objSP=document.createElement("span")
 					objSP.id=counter+":S"
-					objSP.innerHTML = "0:0" 
+					objSP.innerHTML = start 
 					objSP.setAttribute( 'style' , 'font-weight: normal' )
 					objTD.appendChild(objSP)
 					
@@ -295,7 +321,7 @@ body.section-3 #menu li#nav-3 a
 					
 					objSP=document.createElement("span")
 					objSP.id=counter+":E"
-					objSP.innerHTML = "0:0"
+					objSP.innerHTML = end
 					objSP.setAttribute( 'style' , 'font-weight: normal' )
 					objTD.appendChild(objSP)
 					
@@ -326,7 +352,7 @@ body.section-3 #menu li#nav-3 a
 					objTD=document.createElement("td")
 					
 					
-					objTD.innerHTML="<input type='text' size = 50 id='"+counter+":CAPTION' />"
+					objTD.innerHTML="<input type='text' size = 50 id='"+counter+":CAPTION' value = '" + caption + "' />"
 					objTD.setAttribute( 'colspan' , 4 ) 
 					objTR.appendChild(objTD)
 					
@@ -499,12 +525,38 @@ body.section-3 #menu li#nav-3 a
             					obj.parentNode.replaceChild( newObj , obj ) ;
         				}
     				}
+
+				function loading()
+				{
+					update(1) ;
+					
+					xmlHttp=GetXmlHttpObject();
+
+					xmlHttp.onreadystatechange=stateChanged;
+					xmlHttp.open("GET","shomali.xml",false);
+					xmlHttp.send(null);
+				} 
+
+				function stateChanged() 
+				{ 
+					if (xmlHttp.readyState==4)
+					{ 
+   						xmlDoc = xmlHttp.responseXML ;
+
+						var captions = xmlDoc.getElementsByTagName( "div" )[0].getElementsByTagName( "p" ) ;
+
+						for( var i = 0 ; i < captions.length ; i ++ )
+						{
+							AddNewRow( captions[i].getAttribute("begin") , captions[i].getAttribute("end") , captions[i].childNodes[0].nodeValue.replace( /\'/g , '' ).replace( /\"/g , '' ) ) ; 
+						}
+					}
+				}
 				
 </script>
 
 </head>
 
-<body class = "section-1" onload = "update(1)">
+<body class = "section-1" onload = "loading()">
 <ul id="menu">
   <li id="nav-1"><a href="javascript:update(1)">View</a></li>
   <li id="nav-2"><a href="javascript:update(2)">Captions</a></li>
@@ -594,9 +646,9 @@ body.section-3 #menu li#nav-3 a
 
 			 <form method = "get" action = "">
 			     
-					 <a href="javascript:AddNewRow()">Add Caption</a> <br /><br />
+					 <a href="javascript:AddNewRow('0:0' , '0:0' , '')">Add Caption</a> <br /><br />
 
-						<div id="divCaptions" style="height:300px;overflow:auto">
+						<div id="divCaptions" style = "height:300px ; overflow:auto" >
 						</div>
 					 
 					 <br /><br />

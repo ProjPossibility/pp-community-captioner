@@ -274,6 +274,13 @@ body.section-3 #menu li#nav-3 a
 					document.getElementById("divCaptions").removeChild( document.getElementById( id ) ) ;
 				}
 
+				function removeAllRows()
+				{
+					numberOfCaptions = 0 ;
+
+					document.getElementById("divCaptions").innerHTML = "" ;
+				}
+
 				var numberOfCaptions = 0 ;
 
 				var counter = 0 
@@ -653,7 +660,7 @@ body.section-3 #menu li#nav-3 a
 					 
 					 <br /><br />
 					 
-					 <input id = "captionsButton" type = "button" value = "Save Captions" onClick = "saveCaptions()" /><input type = "reset" value = "Clear" />
+					 <input id = "captionsButton" type = "button" value = "Save Captions" onClick = "saveCaptions()" /><input type = "button" value = "Clear" onClick = "removeAllRows()" />
 		 	 </form>
 		</td>
 		</tr>

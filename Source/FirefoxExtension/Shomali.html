@@ -167,6 +167,8 @@ body.section-3 #menu li#nav-3 a
 					return strXML;
     				}
 
+				var same = 0 ;
+
 				function saveCaptions()
 				{
 					document.getElementById( 'captionsButton' ).disabled = true ;
@@ -180,7 +182,14 @@ body.section-3 #menu li#nav-3 a
 						}
 						else
 						{
-							alert( "Invalid Caption Timing! \nStart Timing is Less than Previous End Timing" ) ;
+							if( same == 1 )
+							{
+								alert( "Invalid Caption Timing! \nStart & Begin Timings are equal!" ) ;
+							}
+							else
+							{
+								alert( "Invalid Caption Timing! \nStart Timing is Less than Previous End Timing!" ) ;
+							}
 						}
 					}
 
@@ -230,6 +239,8 @@ body.section-3 #menu li#nav-3 a
 
 									isValid = false ;
 
+									same = 0 ;
+
 									break ;
 								}
 							}
@@ -239,6 +250,8 @@ body.section-3 #menu li#nav-3 a
 
 								isValid = false ;
 
+								same = 0 ;
+
 								break ;
 							}
 
@@ -246,6 +259,15 @@ body.section-3 #menu li#nav-3 a
                
                     					oldMin = document.getElementById( strComponentIDs ).innerHTML.split(":")[0] ;
                     					oldSec = document.getElementById( strComponentIDs ).innerHTML.split(":")[1] ;
+
+							if( oldMin == currentMin && oldSec == currentSec )
+							{
+								isValid = false ;
+
+								same = 1 ;
+
+								break ;
+							}
 						}
             
          			   		iCounter++;

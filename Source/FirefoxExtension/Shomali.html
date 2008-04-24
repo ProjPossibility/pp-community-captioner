@@ -167,7 +167,7 @@ body.section-3 #menu li#nav-3 a
 					return strXML;
     				}
 
-				var same = 0 ;
+				var validationType = 0 ;
 
 				function saveCaptions()
 				{
@@ -182,13 +182,17 @@ body.section-3 #menu li#nav-3 a
 						}
 						else
 						{
-							if( same == 1 )
+							if( validationType == 1 )
 							{
 								alert( "Invalid Caption Timing! \nStart & Begin Timings are equal!" ) ;
 							}
-							else
+							else if( validationType == 0 )
 							{
 								alert( "Invalid Caption Timing! \nStart Timing is Less than Previous End Timing!" ) ;
+							}
+							else
+							{
+								alert( "No Captions Found for this Entry!" ) ;
 							}
 						}
 					}
@@ -239,7 +243,7 @@ body.section-3 #menu li#nav-3 a
 
 									isValid = false ;
 
-									same = 0 ;
+									validationType = 0 ;
 
 									break ;
 								}
@@ -250,7 +254,7 @@ body.section-3 #menu li#nav-3 a
 
 								isValid = false ;
 
-								same = 0 ;
+								validationType = 0 ;
 
 								break ;
 							}
@@ -266,7 +270,20 @@ body.section-3 #menu li#nav-3 a
 
 								isValid = false ;
 
-								same = 1 ;
+								validationType = 1 ;
+
+								break ;
+							}
+
+       					 		strComponentIDs = iCounter + ":CAPTION" ;
+               
+							if( document.getElementById( strComponentIDs ).value == "" )
+							{
+								document.getElementById( "tblCaption:" + iCounter ).bgColor = "#FFCC99" ;
+
+								isValid = false ;
+
+								validationType = 2 ;
 
 								break ;
 							}

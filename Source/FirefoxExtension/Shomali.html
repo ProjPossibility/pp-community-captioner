@@ -87,26 +87,27 @@ body.section-3 #menu li#nav-3 a
 
 <script language="JavaScript" type="text/javascript">
 
-
+				// Get Ajav Object
 				function GetXmlHttpObject()
 				{
-					var xmlHttp=null;
+					// Declare Ajax Object
+					var xmlHttp = null ;
 					
 					try
   					{
   						// Firefox, Opera 8.0+, Safari
-  						xmlHttp=new XMLHttpRequest();
+  						xmlHttp = new XMLHttpRequest();
   					}
 					catch (e)
   					{
-  						// Internet Explorer
+  						// Internet Explorer ... Yes, Very Gay
   						try
     						{
-    							xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+    							xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
     						}
   						catch (e)
     						{
-    							xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+    							xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
     						}
   					}
 				
@@ -115,39 +116,50 @@ body.section-3 #menu li#nav-3 a
 
 				function CreateCaptions()
     				{
+					// A Counter to go through all captions' ids
 				        var iCounter = 0 ;
         				var strID = iCounter + ":S" ;
 
+					// Resulting XML Text
 	        			var strXML='<?xml version="1.0" encoding="UTF-8"?>';
         				var strComponentIDs = "" ;
 		        		var innerCounter = 0 ;
         
+					// Array for saving different types of IDs
 				        var arrIDs = new Array();
 
 					arrIDs[arrIDs.length] = new Option("S","begin");
 					arrIDs[arrIDs.length] = new Option("E","end");
 					arrIDs[arrIDs.length] = new Option("CAPTION","CAPTION");
         
+					// Append XML Definition
 		        		strXML+='<?xml version="1.0" encoding="UTF-8"?><tt xml:lang="en" xmlns="http://www.w3.org/2006/04/ttaf1" xmlns:tts="http://www.w3.org/2006/04/ttaf1#styling"><head><styling><style id="b1" tts:color="#cccc00"/></styling></head><body>'
         				strXML+='<div xml:lang="en" style="b1">'
         
+					// As long as our counter is Less than the Captions' Global Counter 
 				        while( iCounter < counter )
 	        			{
+						// Does this Caption ID Exit ?? Could have been deleted
 						if( document.getElementById(strID) != null )
 						{
-					            	innerCounter=0;
+							// Counter for our Array of IDs
+					            	innerCounter = 0 ;
+
 			        		    	strXML+='<p ';
 
-					            	while(innerCounter<arrIDs.length)
+					            	while( innerCounter < arrIDs.length )
         			    			{
+								// Get ID
                					 		strComponentIDs = iCounter + ":" + arrIDs[innerCounter].text;
                
              	  						if(document.getElementById(strComponentIDs).tagName!="INPUT")
 			                			{
+									// Store Begin and End
                     							strXML += arrIDs[innerCounter].value+'="'+document.getElementById(strComponentIDs).innerHTML+'" ';
        						         	}
 			        			        else
         	        					{
+									// Store Caption
                 				    			strXML += '>'+ "<![CDATA[" + document.getElementById(strComponentIDs).value + "]]>" ;
 				                		}
 	
@@ -162,11 +174,13 @@ body.section-3 #menu li#nav-3 a
 						strID = iCounter + ":" + arrIDs[0].text;
 			        	}
 
+					// Close XML
 	        			strXML+="</div></body></tt>";
         	
 					return strXML;
     				}
 
+				// Different Types of Errors
 				var validationType = 0 ;
 
 				function saveCaptions()
@@ -174,14 +188,17 @@ body.section-3 #menu li#nav-3 a
 					document.getElementById( 'captionsButton' ).disabled = true ;
 					document.getElementById( 'captionsButton' ).value = "Saving ..." ;
 
+					// Only bother if there are captions
 					if( numberOfCaptions != 0 )
 					{
+						// validate
 						if( areCaptionsValid() )
 						{
 							alert( CreateCaptions() ) ;
 						}
 						else
 						{
+							// Show Error
 							if( validationType == 1 )
 							{
 								alert( "Invalid Caption Timing! \nStart & Begin Timings are equal!" ) ;
@@ -203,6 +220,7 @@ body.section-3 #menu li#nav-3 a
 
 				function areCaptionsValid()
 				{
+					// Set Default
 					var isValid = true ;
 
 					var iCounter = 0 ;
@@ -218,12 +236,14 @@ body.section-3 #menu li#nav-3 a
 					var currentMin = 0 ;
 					var currentSec = 0 ;
 
+					// Array Of IDs
 					arrIDs[arrIDs.length] = new Option( "S" , "begin" ) ;
 					arrIDs[arrIDs.length] = new Option( "E" , "end" ) ;
 					arrIDs[arrIDs.length] = new Option( "CAPTION" , "CAPTION" );
         
 				        while( iCounter <= counter )
 	        			{
+						// Does the ID Exist ?
 						if( document.getElementById( strID ) != null )
 						{
        					 		strComponentIDs = iCounter + ":S" ;
@@ -231,6 +251,7 @@ body.section-3 #menu li#nav-3 a
                     					currentMin = document.getElementById( strComponentIDs ).innerHTML.split(":")[0] ;
                     					currentSec = document.getElementById( strComponentIDs ).innerHTML.split(":")[1] ;
 
+							// Compare if the Previous End is Less Than the Current Start
 							if( oldMin == currentMin )
 							{
 								if( oldSec <= currentSec )
@@ -264,6 +285,7 @@ body.section-3 #menu li#nav-3 a
                     					oldMin = document.getElementById( strComponentIDs ).innerHTML.split(":")[0] ;
                     					oldSec = document.getElementById( strComponentIDs ).innerHTML.split(":")[1] ;
 
+							// Check if Start and End of Current Caption are the same
 							if( oldMin == currentMin && oldSec == currentSec )
 							{
 								document.getElementById( "tblCaption:" + iCounter ).bgColor = "#FFCC99" ;
@@ -277,6 +299,7 @@ body.section-3 #menu li#nav-3 a
 
        					 		strComponentIDs = iCounter + ":CAPTION" ;
                
+							// Check if there is no Caption
 							if( document.getElementById( strComponentIDs ).value == "" )
 							{
 								document.getElementById( "tblCaption:" + iCounter ).bgColor = "#FFCC99" ;
@@ -299,35 +322,44 @@ body.section-3 #menu li#nav-3 a
 
 				function update( num )
 				{
+					// Hide All
 				 	for( var i = 1 ; i <= 3 ; i++ )
 				 	{
 				 		document.getElementById( 'content' + i ).style.display = "none" ;
 				 	}
 				
+					// Show What you selected
 					document.getElementById( 'content' + num ).style.display = "inline" ;
 					document.getElementsByTagName( "body" )[0].className = "section-" + num ;
 				}
 
 				function removeRow( id )
 				{
+					// Decrease Number of captions available
 					numberOfCaptions -- ;
 
+					// Visually remove it
 					document.getElementById("divCaptions").removeChild( document.getElementById( id ) ) ;
 				}
 
 				function removeAllRows()
 				{
+					// Set Back to Default
 					numberOfCaptions = 0 ;
 
+					// Visually Clear All
 					document.getElementById("divCaptions").innerHTML = "" ;
 				}
 
+				// Keep Track of all Captions
 				var numberOfCaptions = 0 ;
 
+				// Global Counter ID of Most Recent Caption
 				var counter = 0 
 
 				function AddNewRow( start , end , caption )
 				{
+					// increase Caption
 					numberOfCaptions ++ ;	
 
 					var objTable,objTBody,objTR,objTD,objDIV;
@@ -417,24 +449,23 @@ body.section-3 #menu li#nav-3 a
 					objDIV=document.createElement("div")
 					document.getElementById("divCaptions").appendChild(objDIV)
 
-					counter++
-					
+					// Update Counter ID
+					counter++ ;	
 				}
 				
 				function IncrementTime(id)
 				{
+					var obj = document.getElementById(id) ;
+					var value = obj.innerHTML ;
+					var mm ;
+					var ss ;
 
-					var obj=document.getElementById(id)
-					var value=obj.innerHTML
-					var mm
-					var ss
-
-					if(value=="")
+					if( value == "" )
 					{
-						mm=0;
-						ss=1;	
+						mm = 0 ;
+						ss = 1 ;	
 						
-						obj.innerHTML=mm+":"+ss
+						obj.innerHTML = mm + ":" + ss ;
 					}
 					else
 					{
@@ -443,24 +474,25 @@ body.section-3 #menu li#nav-3 a
 							objE = document.getElementById( id.substring( 0 , id.length - 1 ) + "E" ) ; 
 
 							valueE = objE.innerHTML ;
-							mmE = parseInt(valueE.split(":")[0],10)
-							ssE = parseInt(valueE.split(":")[1],10)	
+
+							mmE = parseInt( valueE.split(":")[0] , 10 ) ;
+							ssE = parseInt( valueE.split(":")[1] , 10 ) ;	
 						}
 	
-						mm=parseInt(value.split(":")[0],10)
-						ss=parseInt(value.split(":")[1],10)
+						mm = parseInt( value.split(":")[0] , 10 )
+						ss = parseInt( value.split(":")[1] , 10 )
 							
-						if(ss%59==0 && ss!=0)
+						if( ss % 59 == 0 && ss != 0 )
 						{
-							ss=0;
-							mm++;
+							ss = 0 ;
+							mm ++ ;
 						}
 						else
 						{
-							ss++;
+							ss ++ ;
 						}
 
-						obj.innerHTML=mm+":"+ss
+						obj.innerHTML = mm + ":" + ss ;
 						
 						if( id.substring( id.length - 1 ) == "S" )
 						{
@@ -482,30 +514,31 @@ body.section-3 #menu li#nav-3 a
 				function DecrementTime(id)
 				{
 						
-					var obj=document.getElementById(id)
-					var value=obj.innerHTML
-					var mm
-					var ss
+					var obj = document.getElementById( id ) ;
+					var value = obj.innerHTML ;
+					var mm ;
+					var ss ;
 					
-					if(value=="")
+					if( value == "" )
 					{
-						mm=0;
-						ss=1;	
+						mm = 0;
+						ss = 1;	
 						
-						obj.innerHTML=mm+":"+ss
+						obj.innerHTML = mm + ":" + ss ;
 					}
 					else
 					{
-						mm=parseInt(value.split(":")[0],10)
-						ss=parseInt(value.split(":")[1],10)
+						mm=parseInt( value.split(":")[0] , 10 )
+						ss=parseInt( value.split(":")[1] , 10 )
 
 						if( id.substring( id.length - 1 ) == "E" )
 						{
 							objS = document.getElementById( id.substring( 0 , id.length - 1 ) + "S" ) ; 
 
 							valueS = objS.innerHTML ;
-							mmS = parseInt(valueS.split(":")[0],10)
-							ssS = parseInt(valueS.split(":")[1],10)	
+
+							mmS = parseInt( valueS.split(":")[0] , 10 ) ;
+							ssS = parseInt( valueS.split(":")[1] , 10 ) ;
 
 							if( mmS == mm && ssS == ss )
 							{
@@ -513,36 +546,37 @@ body.section-3 #menu li#nav-3 a
 							}
 						}
 			
-						if(ss==0 && mm!=0)
+						if( ss == 0 && mm != 0 )
 						{
-							ss=59;								
+							ss = 59 ;								
 							
-							mm--;
+							mm -- ;
 						}
 						else 
 						{
-							if(mm==0 && ss==0)
+							if( mm == 0 && ss == 0 )
 							{
 							}
 							else
 							{
-								ss--;		
+								ss --;		
 							}
 								
 						}
 				
-						obj.innerHTML= mm + ":" + ss
+						obj.innerHTML = mm + ":" + ss
 					}
 				}
 				
 				function Change( id , type , category )
     				{ 
         				var obj=document.getElementById( id ) ;
+
         				var newObj ;
             
-        				if(obj.type!="textarea" && obj.type!="text")
+        				if( obj.type != "textarea" && obj.type != "text" )
         				{
-					        newObj=document.createElement( type ) ;
+					        newObj = document.createElement( type ) ;
             
 	    					if( type == "textarea" )
             					{
@@ -559,7 +593,7 @@ body.section-3 #menu li#nav-3 a
             					newObj.id = id ;
             
           					newObj.onblur = function(){ Change( id , type , category ) } ;
-       						newObj.className="txt" ;
+       						newObj.className = "txt" ;
             					obj.parentNode.replaceChild( newObj , obj ) ;
         				}
 				        else
@@ -576,23 +610,27 @@ body.section-3 #menu li#nav-3 a
 
 				function loading()
 				{
+					// Show first tab
 					update(1) ;
 					
-					xmlHttp=GetXmlHttpObject();
+					// Get Ajax
+					xmlHttp = GetXmlHttpObject();
 
-					xmlHttp.onreadystatechange=stateChanged;
-					xmlHttp.open("GET","shomali.xml",false);
-					xmlHttp.send(null);
+					xmlHttp.onreadystatechange = stateChanged ;
+					xmlHttp.open( "GET" , "shomali.xml" , false ) ;
+					xmlHttp.send( null );
 				} 
 
 				function stateChanged() 
 				{ 
-					if (xmlHttp.readyState==4)
+					// When Ready
+					if (xmlHttp.readyState == 4)
 					{ 
    						xmlDoc = xmlHttp.responseXML ;
 
 						var captions = xmlDoc.getElementsByTagName( "div" )[0].getElementsByTagName( "p" ) ;
 
+						// Load Captions
 						for( var i = 0 ; i < captions.length ; i ++ )
 						{
 							AddNewRow( captions[i].getAttribute("begin") , captions[i].getAttribute("end") , "" + captions[i].childNodes[0].nodeValue.replace( /\"/g , "" ).replace( /\'/g , "" ) + "" ) ; 

@@ -8,6 +8,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <style type="text/css" media="screen">
 
+#master
+{
+	margin : 20px auto; 
+	font: Verdana, Helvetica, Arial; 
+	padding: 0px; 
+	background: #fff; 
+	width: 80%;
+}
+
 #menu 
 {
 	border-bottom : 1px solid #ccc;
@@ -56,9 +65,9 @@
 	color : #f00 !important;
 }
 	
-section-1 #menu li#nav-1 a, 
-section-2 #menu li#nav-2 a,
-section-3 #menu li#nav-3 a
+#master.section-1 #menu li#nav-1 a, 
+#master.section-2 #menu li#nav-2 a,
+#master.section-3 #menu li#nav-3 a
 {
 	background : #fff;
 	border-bottom : 1px solid #fff;
@@ -633,7 +642,7 @@ section-3 #menu li#nav-3 a
 
 </head>
 
-<div id = "master" style = "margin : 20px auto; font: Verdana, Helvetica, Arial; padding: 0px; background: #fff; width: 80%;" class = "section-1">
+<div id = "master" class = "section-1">
 <ul id = "menu">
   <li id="nav-1"><a href="javascript:update(1)">View</a></li>
   <li id="nav-2"><a href="javascript:update(2)">Captions</a></li>

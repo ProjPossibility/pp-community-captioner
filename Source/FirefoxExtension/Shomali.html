@@ -8,15 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <style type="text/css" media="screen">
 
-body 
-{
-	margin : 20px auto;
-	font: Verdana, Helvetica, Arial;
-	padding: 0px;
-	background: #fff;
-	width: 80%;
-}
-
 #menu 
 {
 	border-bottom : 1px solid #ccc;
@@ -330,7 +321,7 @@ section-3 #menu li#nav-3 a
 				
 					// Show What you selected
 					document.getElementById( 'content' + num ).style.display = "inline" ;
-					document.getElementsByTagName( "body" )[0].className = "section-" + num ;
+					document.getElementById( "master" ).className = "section-" + num ;
 				}
 
 				function removeRow( id )
@@ -642,8 +633,8 @@ section-3 #menu li#nav-3 a
 
 </head>
 
-<body class = "section-1" onload = "loading()">
-<ul id="menu">
+<div id = "master" style = "margin : 20px auto; font: Verdana, Helvetica, Arial; padding: 0px; background: #fff; width: 80%;" class = "section-1">
+<ul id = "menu">
   <li id="nav-1"><a href="javascript:update(1)">View</a></li>
   <li id="nav-2"><a href="javascript:update(2)">Captions</a></li>
   <li id="nav-3"><a href="javascript:update(3)">Versions</a></li>
@@ -798,5 +789,12 @@ section-3 #menu li#nav-3 a
 	</div>
 	
 </div>
+
+<script language="JavaScript" type="text/javascript">
+
+loading() ;
+
+</script>
+
 </body>
 </html>

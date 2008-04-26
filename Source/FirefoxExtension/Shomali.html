@@ -87,31 +87,30 @@
 
 <script language="JavaScript" type="text/javascript">
 
-				// Get Ajav Object
-				function GetXmlHttpObject()
+				function loadXMLString( txt ) 
 				{
-					// Declare Ajax Object
-					var xmlHttp = null ;
-					
-					try
+					try //Internet Explorer
   					{
-  						// Firefox, Opera 8.0+, Safari
-  						xmlHttp = new XMLHttpRequest();
+  						xmlDoc=new ActiveXObject( "Microsoft.XMLDOM" ) ;
+  						xmlDoc.async = "false" ;
+  						xmlDoc.loadXML( txt ) ;
+  						return( xmlDoc ) ; 
   					}
-					catch (e)
+					catch(e)
   					{
-  						// Internet Explorer ... Yes, Very Gay
-  						try
+  						try //Firefox, Mozilla, Opera, etc.
     						{
-    							xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+    							parser = new DOMParser() ;
+    							xmlDoc = parser.parseFromString( txt , "text/xml" ) ;
+    							return( xmlDoc ) ;
     						}
-  						catch (e)
-    						{
-    							xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-    						}
+  						catch( e ) 
+						{
+							alert( e.message ) ;
+						}
   					}
-				
-					return xmlHttp;
+
+					return( null ) ;
 				}
 
 				function CreateCaptions()
@@ -608,32 +607,21 @@
         				}
     				}
 
+		var cc_Captions = '<?xml version="1.0" encoding="UTF-8"?><tt xml:lang="en" xmlns="http://www.w3.org/2006/04/ttaf1"  xmlns:tts="http://www.w3.org/2006/04/ttaf1#styling"><head><styling><style id="b1" tts:color="#cccc00"/></styling></head><body><div xml:lang="en" style="b1"><p begin="00:13" end="00:14"><![CDATA[The heart is a bloom]]></p><p begin="00:17" end="00:20"><![CDATA[Shoots up through the stony ground]]></p><p begin="00:20" end="00:21"><![CDATA[Theres no room]]></p></div></body></tt>' ;
+
 				function loading()
 				{
-					// Get Ajax
-					xmlHttp = GetXmlHttpObject();
+					// Convert String To XML
+					xmlDoc = loadXMLString( cc_Captions ) ;
 
-					xmlHttp.onreadystatechange = stateChanged ;
-					xmlHttp.open( "GET" , "shomali.xml" , false ) ;
-					xmlHttp.send( null );
-				} 
+					var captions = xmlDoc.getElementsByTagName( "div" )[0].getElementsByTagName( "p" ) ;
 
-				function stateChanged() 
-				{ 
-					// When Ready
-					if (xmlHttp.readyState == 4)
-					{ 
-   						xmlDoc = xmlHttp.responseXML ;
-
-						var captions = xmlDoc.getElementsByTagName( "div" )[0].getElementsByTagName( "p" ) ;
-
-						// Load Captions
-						for( var i = 0 ; i < captions.length ; i ++ )
-						{
-							AddNewRow( captions[i].getAttribute("begin") , captions[i].getAttribute("end") , "" + captions[i].childNodes[0].nodeValue.replace( /\"/g , "" ).replace( /\'/g , "" ) + "" ) ; 
-						}
+					// Load Captions
+					for( var i = 0 ; i < captions.length ; i ++ )
+					{
+						AddNewRow( captions[i].getAttribute("begin") , captions[i].getAttribute("end") , "" + captions[i].childNodes[0].nodeValue.replace( /\"/g , "" ).replace( /\'/g , "" ) + "" ) ; 
 					}
-				}
+				} 
 				
 </script>
 

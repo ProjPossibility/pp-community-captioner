@@ -92,7 +92,7 @@ cc_findPlayerDivJS += "	}  ";
 cc_findPlayerDivJS += "	counter++;";
 cc_findPlayerDivJS += "} ";
 cc_findPlayerDivJS += "  return document.getElementsByTagName(\"embed\")[counter].parentNode;";
-cc_findPlayerDivJS += "} ";
+cc_findPlayerDivJS += "} "
 var cc_findPlayerDivScript = document.createElement("script");
 cc_findPlayerDivScript.type="text/javascript"
 cc_findPlayerDivScript.innerHTML = cc_findPlayerDivJS;
@@ -223,7 +223,7 @@ cc_writePlayerDivJS += "var cc_objParent=document.getElementById(\"ccGetCaptionS
 cc_writePlayerDivJS += "	cc_objParent.removeChild(document.getElementById(\"ccGetCaptionScript\"));";
 cc_writePlayerDivJS += "}";
 
-cc_writePlayerDivJS += "cc_appendSRCforCaptions();";
+cc_writePlayerDivJS += "/*cc_appendSRCforCaptions();*/";
 
 cc_writePlayerDivJS += "  cc_objPlayerDIV.innerHTML=\"\";";
 

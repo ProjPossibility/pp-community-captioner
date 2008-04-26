@@ -610,9 +610,6 @@
 
 				function loading()
 				{
-					// Show first tab
-					update(1) ;
-					
 					// Get Ajax
 					xmlHttp = GetXmlHttpObject();
 
@@ -650,30 +647,29 @@
 </ul>
 <div id="contents">
 
-	<div id = "content1" style = "display:none" >
-	
-
 		<table border = "0" width = "100%" >
 		<tr>
 		<td valign = "top">
 	
-		 <div style = "border: 5px double #ccc; background-color: #E8EBF0; width: 500px ; height: 400px" >
+		<div style = "border: 5px double #ccc; background-color: #E8EBF0; width: 100% ; height: 400px" >
 
-		<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="100%" height="100%" id="ccPlayer" align="middle">
-	  	<param name="allowFullScreen" value="true" />
- 	 	<param name="allow-access-from domain" value="*" />
- 	 	<param name="allowScriptAccess" value="always" />
-  		<param name="movie" value="player.swf"/>
-  		<param name="quality" value="high" />
-  		<param name="bgcolor" value="#cccccc" />
-  		<embed src="http://www.projectpossibility.org/projects/webcaption/player.swf" allowfullscreen="true" quality="high" bgcolor="#cccccc"  name="flash" align="middle" id="flash1" allowScriptAccess="always" height="395" width="480" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
-  		</object>
+			<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="100%" height="100%" id="ccPlayer" align="middle">
+			  	<param name="allowFullScreen" value="true" />
+		 	 	<param name="allow-access-from domain" value="*" />
+ 	 			<param name="allowScriptAccess" value="always" />
+  				<param name="movie" value="player.swf"/>
+		  		<param name="quality" value="high" />
+  				<param name="bgcolor" value="#cccccc" />
+  				<embed src="http://www.projectpossibility.org/projects/webcaption/player.swf" allowfullscreen="true" quality="high" bgcolor="#cccccc"  name="flash" align="middle" id="flash1" allowScriptAccess="always" height="100%" width="100%" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+ 	 		</object>
 	
-		 </div>
+		</div>
 		 
 		</td>
 		
 		<td valign = "top" align = "right" width = "50%">		 		
+
+		<div id = "content1">
 
 			<div align = "left" style = "width : 80% ; font-size: 16px; font-family : courier;" >
 
@@ -699,36 +695,9 @@
 
 			</div>
 
-		</td>
-		</tr>
-		</table>
-
-	
-	</div>
-	
-	<div id = "content2" style = "display:none">
-
-		<table border = "0" width = "100%" >
-		<tr>
-		<td valign = "top" width = "50%">
-	
-		<div style = "border: 5px double #ccc; background-color: #E8EBF0; width: 500px ; height: 400px" >
-
-		<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="100%" height="100%" id="ccPlayer" align="middle">
-	  	<param name="allowFullScreen" value="true" />
- 	 	<param name="allow-access-from domain" value="*" />
- 	 	<param name="allowScriptAccess" value="always" />
-  		<param name="movie" value="player.swf"/>
-  		<param name="quality" value="high" />
-  		<param name="bgcolor" value="#cccccc" />
-  		<embed src="http://www.projectpossibility.org/projects/webcaption/player.swf" allowfullscreen="true" quality="high" bgcolor="#cccccc"  name="flash" align="middle" id="flash1" allowScriptAccess="always" height="395" width="480" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
-  		</object>
-	
 		</div>
-		 
-		</td>
-		
-		<td valign = "top"  align = "right">		 
+	
+		<div id = "content2" style = "display:none">
 
 			 <form method = "get" action = "">
 			     
@@ -741,34 +710,9 @@
 					 
 					 <input id = "captionsButton" type = "button" value = "Save Captions" onClick = "saveCaptions()" /><input type = "button" value = "Clear" onClick = "removeAllRows()" />
 		 	 </form>
-		</td>
-		</tr>
-		</table>
-	</div>
+		</div>
 
-	<div id = "content3" >
-
-		<table border = "0" width = "100%" >
-		<tr>
-		<td valign = "top">
-	
-		 <div style = "border: 5px double #ccc; background-color: #E8EBF0; width: 500px ; height: 400px" >
-
-		<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="100%" height="100%" id="ccPlayer" align="middle">
-	  	<param name="allowFullScreen" value="true" />
- 	 	<param name="allow-access-from domain" value="*" />
- 	 	<param name="allowScriptAccess" value="always" />
-  		<param name="movie" value="player.swf"/>
-  		<param name="quality" value="high" />
-  		<param name="bgcolor" value="#cccccc" />
-  		<embed src="http://www.projectpossibility.org/projects/webcaption/player.swf" allowfullscreen="true" quality="high" bgcolor="#cccccc"  name="flash" align="middle" id="flash1" allowScriptAccess="always" height="395" width="480" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
-  		</object>
-	
-		 </div>
-		 
-		</td>
-		
-		<td valign = "top" align = "right" width = "50%">		 		
+		<div id = "content3" style = "display:none">
 
 			<div align = "left" style = "width : 80% ; font-size: 16px;" ><br /> Available Versions (4): <br /><br /> </div>
 
@@ -791,16 +735,17 @@
 			</tr>	
 	
 			</table>
+		</div>
+
 		</td>
 		</tr>
 		</table>
-
-	</div>
 	
 </div>
 
 <script language="JavaScript" type="text/javascript">
 
+// OnLoad Event
 loading() ;
 
 </script>

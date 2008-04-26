@@ -11,6 +11,17 @@ if(theURL.indexOf('youtube.com/watch')!= -1)
 {
 var objTarget=document.documentElement.firstChild;
 
+var appendSRCforCaptions = document.createElement('script');
+appendSRCforCaptions.type = "text/javascript";
+var cc_appendSRCforCaptionsJS ="cc_appendSRCforCaptions(){";
+cc_appendSRCforCaptionsJS += "var objTarget=document.documentElement.firstChild;";
+cc_appendSRCforCaptionsJS += "var remoteScript=document.createElement('div');";
+cc_appendSRCforCaptionsJS += "remoteScript.innerHTML = \"<script id='ccGetCaptionScript' src='http://www.projectpossibility.org/projects/webcaption/URL_test_mjt.php?mode=getCaption&domain=\" + window.location.href.split('?')[0] +\"&url_id=\" + window.location.href.split('?')[1].split('=')[1].split('&')[0] + \"'/>\";";
+cc_appendSRCforCaptionsJS += "objTarget.appendChild(remoteScript);";
+cc_appendSRCforCaptionsJS +="}";
+appendSRCforCaptions.innerHTML = cc_appendSRCforCaptionsJS;
+objTarget.appendChild(appendSRCforCaptions);
+
 //Start insertCaptionButtons
 
 var objUIScript= document.createElement('script');
@@ -212,11 +223,14 @@ cc_writePlayerDivJS += "var cc_objParent=document.getElementById(\"ccGetCaptionS
 cc_writePlayerDivJS += "	cc_objParent.removeChild(document.getElementById(\"ccGetCaptionScript\"));";
 cc_writePlayerDivJS += "}";
 
-cc_writePlayerDivJS += "var objTarget=document.documentElement.firstChild;";
-cc_writePlayerDivJS += "var remoteScript=document.createElement('div');";
-cc_writePlayerDivJS += "remoteScript.innerHTML = \"<script id='ccGetCaptionScript' src='http://www.projectpossibility.org/projects/webcaption/URL_test_mjt.php?mode=getCaption&domain=\" + window.location.href.split('?')[0] +\"&url_id=\" + window.location.href.split('?')[1].split('=')[1].split('&')[0] + \"'/>\";";
+cc_writePlayerDivJS += "cc_appendSRCforCaptions();";
 
-cc_writePlayerDivJS += "objTarget.appendChild(remoteScript);";
+var cc_appendSRCforCaptionsJS ="cc_appendSRCforCaptions(){
+cc_appendSRCforCaptionsJS += "var objTarget=document.documentElement.firstChild;";
+cc_appendSRCforCaptionsJS += "var remoteScript=document.createElement('div');";
+cc_appendSRCforCaptionsJS += "remoteScript.innerHTML = \"<script id='ccGetCaptionScript' src='http://www.projectpossibility.org/projects/webcaption/URL_test_mjt.php?mode=getCaption&domain=\" + window.location.href.split('?')[0] +\"&url_id=\" + window.location.href.split('?')[1].split('=')[1].split('&')[0] + \"'/>\";";
+cc_appendSRCforCaptionsJS += "objTarget.appendChild(remoteScript);";
+cc_appendSRCforCaptionsJS +="}";
 
 
 

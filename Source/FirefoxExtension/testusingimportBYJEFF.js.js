@@ -3,11 +3,10 @@
 // @namespace      youtube
 // ==/UserScript==
 
-
-
-
-
-
+/*the main purpose of this js is to rewrite the page of youtube
+and insert the necessary code to run our FLV player
+captioning functions.
+*/
 
 
 
@@ -26,7 +25,7 @@ objUIScript.src = "http://www.projectpossibility.org/projects/webcaption/cc_UI_C
 document.documentElement.firstChild.appendChild(objUIScript);
 
 
-
+//this is the script for inserting captions
 var insertCaptionButtonsScript = document.createElement("script");
 insertCaptionButtonsScript.type="text/javascript";
 //new buttons
@@ -239,7 +238,8 @@ objTarget.appendChild(cc_InsertTabScript);
 var cc_writePlayerDivJS = "function cc_writePlayerDiv(){alert('in cc_writePlayerDiv');";
 cc_writePlayerDivJS += "var cell=document.getElementById(\"thisVidCell\");";
 
-//style tags
+//this is the style tags
+//to be used in the player that we are going to replace with the youtube's player
 cc_writePlayerDivJS += "var cc_styleInPlayer = document.createElement(\"style\");";
 cc_writePlayerDivJS += "cc_styleInPlayer.type=\"text/css\";";
 cc_writePlayerDivJS += "cc_styleInPlayer.media=\"screen\";";

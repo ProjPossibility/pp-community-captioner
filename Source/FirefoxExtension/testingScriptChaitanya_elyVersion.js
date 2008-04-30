@@ -13,7 +13,8 @@ var objTarget=document.documentElement.firstChild;
 
 var appendSRCforCaptions = document.createElement('script');
 appendSRCforCaptions.type = "text/javascript";
-var cc_appendSRCforCaptionsJS ="function cc_appendSRCforCaptions(){alert('called cc_appendSRCforCaptions');";
+var cc_appendSRCforCaptionsJS ="function cc_appendSRCforCaptions(){";
+cc_appendSRCforCaptionsJS += "if(!cc_doesVidExist){return;}alert('called cc_appendSRCforCaptions');";
 cc_appendSRCforCaptionsJS += "var objTarget=document.documentElement.firstChild;";
 cc_appendSRCforCaptionsJS += "var remoteScript=document.createElement('div');";
 cc_appendSRCforCaptionsJS += "remoteScript.innerHTML = \"<script id='ccGetCaptionScript' src='http://www.projectpossibility.org/projects/webcaption/URL_test_mjt.php?mode=getCaption&domain=\" + window.location.href.split('?')[0] +\"&url_id=\" + window.location.href.split('?')[1].split('=')[1].split('&')[0] + \"'/>\";";

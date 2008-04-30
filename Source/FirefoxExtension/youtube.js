@@ -26,7 +26,7 @@ var objTarget=document.documentElement.firstChild;
 var remoteScript=document.createElement("div");
 remoteScript.innerHTML = "<script id='ccGetCaptionScript' src='http://www.projectpossibility.org/projects/webcaption/URL_test.php?mode=getCaption&domain=" + window.location.href.split('?')[0] +"&url_id=" + window.location.href.split('?')[1].split('=')[1].split('&')[0] + "'/>Calling...";
 
-objTarget.appendChild(remoteScript);
+//objTarget.appendChild(remoteScript);
 
 
 var objDIV=document.createElement("div")
@@ -120,3 +120,4 @@ script.innerHTML+='}\n'
 
 
 objPlayerDIV.appendChild(script)
+document.documentElement.appendChild(remoteScript)

@@ -28,7 +28,6 @@ objTarget.appendChild(appendSRCforCaptions);
 
 
 
-//
 var objUIScript= document.createElement('script');
 objUIScript.type = "text/javascript";
 objUIScript.src = "http://www.projectpossibility.org/projects/webcaption/cc_UI_CaptionsScript_e.js";

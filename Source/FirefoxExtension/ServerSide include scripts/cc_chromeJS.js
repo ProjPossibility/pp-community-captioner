@@ -33,7 +33,7 @@ alert('insertCaptionButtons, cc_doesVidExist: ' + cc_doesVidExist);
   {
     //div for 'Get Captions' if captions exist
     var getCapDIV=document.createElement("div");
-    getCapDIV.innerHTML = "<div id='container'/><br/><br/><a class='action-button' onclick='cc_getCations();' title='Get the captions for this video'><span class='action-button-leftcap'></span><span class='action-button-text' style='color:blue;'>Get Captions</span><span class='action-button-rightcap'></span></a>";
+    getCapDIV.innerHTML = "<div id='container'/><br/><br/><a class='action-button' onclick='cc_getCaptions();' title='Get the captions for this video'><span class='action-button-leftcap'></span><span class='action-button-text' style='color:blue;'>Get Captions</span><span class='action-button-rightcap'></span></a>";
     subScribeDIV.appendChild(getCapDIV);
   }
   else
@@ -51,7 +51,7 @@ alert('insertCaptionButtons, cc_doesVidExist: ' + cc_doesVidExist);
 //function to find and return the playerdiv
 function cc_findPlayerDiv(){
 
-//DEBUG  
+//DEBUG
 alert('in findPlayerDiv');
 
   var counter=0;
@@ -67,6 +67,152 @@ alert('in findPlayerDiv');
 }
 
 
+
+
+//tab code
+function cc_InsertTab()
+{
+  var objPlayerDiv=cc_findPlayerDiv();
+  var strTabHTML = "<br/><div id=\"CC_tabDiv\" style=\"margin: 0px; padding: 0px; overflow: visible; display: block; width: 480px;\"><div align=\"right\" style=\"overflow: visible; height: 0px; width: 100%;\"><div align=\"center\" style=\"border-style: ridge ridge none; border-width: 2px 2px 0px; padding: 1px; overflow: visible; vertical-align: bottom; -moz-border-radius-topleft: 10px; -moz-border-radius-topright: 10px; opacity: 0.5; background-color: white; position: relative; top: -19px; left: -434px; z-index: 900; width: 40px; height: 15px; cursor: pointer;\"><span style=\"font-family: Arial,Helvetica,Sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: bold; line-height: 140%; text-align: right; text-decoration: none; opacity: 1.5; color: black;\" onclick=\"cc_getCaptions();\">[CC]</span></div></div></div>";
+
+  //Put our tab code before everything that is inside the playerdiv now (look into a better way to do this?)
+  objPlayerDiv.innerHTML = strTabHTML + objPlayerDiv.innerHTML;
+}
+
+
+
+
+
+
+
+
+//function to re-write the player with ours
+
+
+function cc_writePlayerDiv()
+{
+//DEBUG
+  alert('in cc_writePlayerDiv');
+  
+
+    var cell=document.getElementById("thisVidCell");
+    
+    //style tags
+    var cc_styleInPlayer = document.createElement("style");
+    cc_styleInPlayer.type="text/css";
+    cc_styleInPlayer.media="screen";
+    cc_styleInPlayer.innerHTML+="#section-1 div";
+    cc_styleInPlayer.innerHTML+="{";
+    cc_styleInPlayer.innerHTML+="margin : 20px auto;";
+    cc_styleInPlayer.innerHTML+="font: Verdana, Helvetica, Arial;";
+    cc_styleInPlayer.innerHTML+= "padding: 0px;";
+    cc_styleInPlayer.innerHTML+= "background: #fff;";
+    cc_styleInPlayer.innerHTML+= "width: 80%;";
+    cc_styleInPlayer.innerHTML+= "}";
+    cc_styleInPlayer.innerHTML+= "";
+    cc_styleInPlayer.innerHTML+= "#menu ";
+    cc_styleInPlayer.innerHTML+= "{";
+    cc_styleInPlayer.innerHTML+= "	border-bottom : 1px solid #ccc;";
+    cc_styleInPlayer.innerHTML+= "	margin : 0;";
+    cc_styleInPlayer.innerHTML+= "	padding-bottom : 19px;";
+    cc_styleInPlayer.innerHTML+= "	padding-left : 10px;";
+    cc_styleInPlayer.innerHTML+= "}";
+    cc_styleInPlayer.innerHTML+= "";
+    cc_styleInPlayer.innerHTML+= "#menu ul, #menu li	";
+    cc_styleInPlayer.innerHTML+= "{";
+    cc_styleInPlayer.innerHTML+= "	display : inline;";
+    cc_styleInPlayer.innerHTML+= "	list-style-type : none;";
+    cc_styleInPlayer.innerHTML+= "	margin : 0;";
+    cc_styleInPlayer.innerHTML+= "	padding : 0;";
+    cc_styleInPlayer.innerHTML+= "}";
+    cc_styleInPlayer.innerHTML+= "";
+    cc_styleInPlayer.innerHTML+= "	";
+    cc_styleInPlayer.innerHTML+= "#menu a:link, #menu a:visited	";
+    cc_styleInPlayer.innerHTML+= "{";
+    cc_styleInPlayer.innerHTML+= "	background : #E8EBF0;";
+    cc_styleInPlayer.innerHTML+= "	border : 1px solid #ccc;";
+    cc_styleInPlayer.innerHTML+= "	color : #666;";
+    cc_styleInPlayer.innerHTML+= "	float : left;";
+    cc_styleInPlayer.innerHTML+= "	font-size : small;";
+    cc_styleInPlayer.innerHTML+= "	font-weight : normal;";
+    cc_styleInPlayer.innerHTML+= "	line-height : 14px;";
+    cc_styleInPlayer.innerHTML+= "	margin-right : 8px;";
+    cc_styleInPlayer.innerHTML+= "	padding : 2px 10px 2px 10px;";
+    cc_styleInPlayer.innerHTML+= "	text-decoration : none;";
+    cc_styleInPlayer.innerHTML+= "}";
+    cc_styleInPlayer.innerHTML+= "";
+    cc_styleInPlayer.innerHTML+= "#menu a:link.active, #menu a:visited.active	";
+    cc_styleInPlayer.innerHTML+= "{";
+    cc_styleInPlayer.innerHTML+= "	background : #fff;";
+    cc_styleInPlayer.innerHTML+= "	border-bottom : 1px solid #fff;";
+    cc_styleInPlayer.innerHTML+= "	color : #000;";
+    cc_styleInPlayer.innerHTML+= "}";
+    cc_styleInPlayer.innerHTML+= "";
+    cc_styleInPlayer.innerHTML+= "#menu a:hover	";
+    cc_styleInPlayer.innerHTML+= "{";
+    cc_styleInPlayer.innerHTML+= "	color : #f00;";
+    cc_styleInPlayer.innerHTML+= "}";
+    cc_styleInPlayer.innerHTML+= "";
+    cc_styleInPlayer.innerHTML+= "#menu ul a:hover ";
+    cc_styleInPlayer.innerHTML+= "{";
+    cc_styleInPlayer.innerHTML+= "	color : #f00 !important;";
+    cc_styleInPlayer.innerHTML+= "}";
+    cc_styleInPlayer.innerHTML+= "	";
+    cc_styleInPlayer.innerHTML+= "div.section-1 #menu li#nav-1 a, ";
+    cc_styleInPlayer.innerHTML+= "div.section-2 #menu li#nav-2 a,";
+    cc_styleInPlayer.innerHTML+= "div.section-3 #menu li#nav-3 a";
+    cc_styleInPlayer.innerHTML+= "{";
+    cc_styleInPlayer.innerHTML+= "	background : #fff;";
+    cc_styleInPlayer.innerHTML+= "	border-bottom : 1px solid #fff;";
+    cc_styleInPlayer.innerHTML+= "	color : #000;";
+    cc_styleInPlayer.innerHTML+= "}";
+    cc_styleInPlayer.innerHTML+= "";
+    cc_styleInPlayer.innerHTML+= "#contents ";
+    cc_styleInPlayer.innerHTML+= "{";
+    cc_styleInPlayer.innerHTML+= "	background : #fff;";
+    cc_styleInPlayer.innerHTML+= "	border : 1px solid #ccc;";
+    cc_styleInPlayer.innerHTML+= "	border-top : none;";
+    cc_styleInPlayer.innerHTML+= "	clear : both;";
+    cc_styleInPlayer.innerHTML+= "	margin : 0px;";
+    cc_styleInPlayer.innerHTML+= "	padding : 30px;";
+    cc_styleInPlayer.innerHTML+= "}";
+    
+    var cc_styleTarget = document.documentElement.firstChild;
+    cc_styleTarget.insertBefore(cc_styleInPlayer, cc_styleTarget.firstChild);
+    
+    //end style
+    
+    var cc_objDIV=document.createElement("div");
+    var cc_objPlayerDIV=cc_findPlayerDiv();
+    
+    if(document.getElementById("ccGetCaptionScript")!=null)
+    {
+      var cc_objParent=document.getElementById("ccGetCaptionScript").parentNode;
+      cc_objParent.removeChild(document.getElementById("ccGetCaptionScript"));
+    }
+    
+    cc_objPlayerDIV.innerHTML="";
+    var objUIScript=document.createElement( "script" );
+    objUIScript.type="text/javascript";
+    objUIScript.src="http://www.projectpossibility.org/projects/webcaption/cc_UI_Script_e.js";
+    cc_objDIV.appendChild(objUIScript);
+    
+    cc_objPlayerDIV.appendChild(cc_objDIV);
+}
+
+
+
+//function to get the captions and re-write the divs
+function cc_getCaptions()
+{
+  /*hide the CC tab, only re-write the div if the cc tab is visible so we don't do it again*/
+  if(document.getElementById('CC_tabDiv')!=null)
+  {
+    document.getElementById('CC_tabDiv').style.visibility = 'hidden';
+    /*now re-write the playerDiv*/
+    cc_writePlayerDiv();
+  }
+}
 
 
 
@@ -724,3 +870,6 @@ function Position()
 var cc_remoteScript=document.createElement("div");
 cc_remoteScript.innerHTML = "<script src='http://www.projectpossibility.org/projects/webcaption/URL_test_mjt.php?mode=captionExist&domain=" + window.location.href.split('?')[0] +"&url_id=" + window.location.href.split('?')[1].split('=')[1].split('&')[0] + "'/>";
 document.documentElement.firstChild.appendChild(cc_remoteScript);
+
+//Put our [CC] tab on the video
+cc_InsertTab();

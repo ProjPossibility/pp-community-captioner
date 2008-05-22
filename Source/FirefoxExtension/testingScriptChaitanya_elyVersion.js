@@ -6,103 +6,16 @@
 
 //Start
 var theURL = window.location.href;
-//The script is only for youtube for now, so don't run if this isn't a youtube video
+//Check if we are on a youtube video, later on we will have else ifs for other known sites, and an default else clause to get the user to help us find the player div for unknown sites
 if(theURL.indexOf('youtube.com/watch')!= -1)
 {
-/*get the first element as our default target to append script tags to*/
+//Get the first child from the dom to insert our scripts into
 var objTarget=document.documentElement.firstChild;
-//Our functions need to be written to the page as script elements so they can be called later so many are like the following
-//Script element for cc_appendSRCforCaptions() function
-var appendSRCforCaptions = document.createElement('script');
-appendSRCforCaptions.type = "text/javascript";
-//cc_appendSRCforCaptions()s creates a call to our backend php asking for the caption xml url.
-var cc_appendSRCforCaptionsJS ="function cc_appendSRCforCaptions(){";
-cc_appendSRCforCaptionsJS += "if(!cc_doesVidExist){return;}alert('called cc_appendSRCforCaptions');";
-cc_appendSRCforCaptionsJS += "var objTarget=document.documentElement.firstChild;";
-cc_appendSRCforCaptionsJS += "var remoteScript=document.createElement('div');";
-cc_appendSRCforCaptionsJS += "remoteScript.innerHTML = \"<script id='ccGetCaptionScript' src='http://www.projectpossibility.org/projects/webcaption/URL_test_mjt.php?mode=getCaption&domain=\" + window.location.href.split('?')[0] +\"&url_id=\" + window.location.href.split('?')[1].split('=')[1].split('&')[0] + \"'/>\";";
-cc_appendSRCforCaptionsJS += "objTarget.appendChild(remoteScript);";
-cc_appendSRCforCaptionsJS +="}";
-appendSRCforCaptions.innerHTML = cc_appendSRCforCaptionsJS;
-objTarget.appendChild(appendSRCforCaptions);
-
-
-
-var objUIScript= document.createElement('script');
-objUIScript.type = "text/javascript";
-objUIScript.src = "http://www.projectpossibility.org/projects/webcaption/cc_UI_CaptionsScript_e.js";
-document.documentElement.firstChild.appendChild(objUIScript);
-
-//Start insertCaptionButtons
-var insertCaptionButtonsScript = document.createElement("script");
-insertCaptionButtonsScript.type="text/javascript";
-//new buttons
-insertCaptionButtonsScript.innerHTML = "function insertCaptionButtons(cc_doesVidExist)";
-insertCaptionButtonsScript.innerHTML +="{";
-
-//DEBUG
-insertCaptionButtonsScript.innerHTML +="alert('videxists inside insert: ' + cc_doesVidExist);";
-
-insertCaptionButtonsScript.innerHTML +="var subScribeDIV=document.getElementById(\"subscribeDiv\");";
-insertCaptionButtonsScript.innerHTML +="if(cc_doesVidExist == 'true')";//we should probably check for partial here...   (it is undefined right now!)
-insertCaptionButtonsScript.innerHTML +="{";
-//div for 'Get Captions' if captions exist
-insertCaptionButtonsScript.innerHTML +="var getCapDIV=document.createElement(\"div\");";
-insertCaptionButtonsScript.innerHTML +=" getCapDIV.innerHTML = \"<div id='container'/><br/><br/><a class='action-button' onclick='cc_getCaptions();' title='Get the captions for this video'><span class='action-button-leftcap'></span><span class='action-button-text' style='color:blue;'>Get Captions</span><span class='action-button-rightcap'></span></a>\";";
-insertCaptionButtonsScript.innerHTML +="subScribeDIV.appendChild(getCapDIV);";
-//we dont want div for Caption it!  if captions exist
-/*
-insertCaptionButtonsScript.innerHTML +="var captionItDIV=document.createElement(\"div\");";
-insertCaptionButtonsScript.innerHTML +="captionItDIV.innerHTML = \"<a class='action-button' onclick='cc_getCaptions();' title='Captions already exist for this video'><span class='action-button-leftcap'></span><span class='action-button-text' style='color:grey;'>Caption It!</span><span class='action-button-rightcap'></span></a>\";";
-*/
-insertCaptionButtonsScript.innerHTML +="}";
-insertCaptionButtonsScript.innerHTML +="else";
-insertCaptionButtonsScript.innerHTML +="{";
-//we dont want Get Captions if captions do not exist
-/*
-insertCaptionButtonsScript.innerHTML +=" getCapDIV.innerHTML = \"<br/><br/><a class='action-button' onclick=';' title='There are not any captions for this video yet'><span class='action-button-leftcap'></span><span class='action-button-text' style='color:grey;'>Get Captions</span><span class='action-button-rightcap'></span></a>\";";
-*/
-//div for Caption it!  if captions do not exist
-insertCaptionButtonsScript.innerHTML +="var captionItDIV=document.createElement(\"div\");";
-insertCaptionButtonsScript.innerHTML +="captionItDIV.innerHTML = \"<a class='action-button' onclick='cc_captionIt();' title='Start writing captions for this video!'><span class='action-button-leftcap'></span><span class='action-button-text' style='color:blue;'>Caption It!</span><span class='action-button-rightcap'></span></a>\";";
-insertCaptionButtonsScript.innerHTML +="subScribeDIV.appendChild(captionItDIV);";
-insertCaptionButtonsScript.innerHTML +="}";
-insertCaptionButtonsScript.innerHTML +="}";
-
-objTarget.appendChild(insertCaptionButtonsScript);
-//End insertCaptionButtons
-
-
-
-
-
-//cross site:
-
-  var remoteScript=document.createElement("div");
-  remoteScript.innerHTML = "<script src='http://www.projectpossibility.org/projects/webcaption/URL_test_mjt.php?mode=captionExist&domain=" + window.location.href.split('?')[0] +"&url_id=" + window.location.href.split('?')[1].split('=')[1].split('&')[0] + "'/>Calling...";
-
-objTarget.appendChild(remoteScript);
-
-
-//js function to find and return the playerdiv
-var cc_findPlayerDivJS = "function cc_findPlayerDiv(){alert('in findPlayerDiv');";
-cc_findPlayerDivJS += "var counter=0;";
-cc_findPlayerDivJS += "while(document.getElementsByTagName(\"embed\")[counter]!=null)";
-cc_findPlayerDivJS += "{";
-cc_findPlayerDivJS += "	if(document.getElementsByTagName(\"embed\")[counter].width>0 ) ";
-cc_findPlayerDivJS += "	{ ";
-cc_findPlayerDivJS += "		break;";
-cc_findPlayerDivJS += "	}  ";
-cc_findPlayerDivJS += "	counter++;";
-cc_findPlayerDivJS += "} ";
-cc_findPlayerDivJS += "  return document.getElementsByTagName(\"embed\")[counter].parentNode;";
-cc_findPlayerDivJS += "} "
-var cc_findPlayerDivScript = document.createElement("script");
-cc_findPlayerDivScript.type="text/javascript"
-cc_findPlayerDivScript.innerHTML = cc_findPlayerDivJS;
-objTarget=document.documentElement.firstChild;
-objTarget.appendChild(cc_findPlayerDivScript);
-
+//Create a script tag pointing to our scripts (hosted serverside for now, soon as chrome://)
+var objChromeScript=document.createElement( "script" );
+objChromeScript.type="text/javascript";
+objChromeScript.src="http://www.projectpossibility.org/projects/webcaption/cc_chromeJS.js";
+objTarget.appendChild(objChromeScript);
 
 
 var baseDiv=document.getElementById("subscribeDiv"); //base div for our buttons
@@ -110,7 +23,7 @@ var baseDiv=document.getElementById("subscribeDiv"); //base div for our buttons
 var cc_InsertTabJS = "function cc_InsertTab(){";
 cc_InsertTabJS += "var objPlayerDiv=cc_findPlayerDiv();";
 cc_InsertTabJS += "var strTabHTML = \"";
-var cc_InsertTabJSInnerHTML = "<br/><div id=\\\"CC_tabDiv\\\" style=\\\"margin: 0px; padding: 0px; overflow: visible; display: block; width: 480px;\\\"><div align=\\\"right\\\" style=\\\"overflow: visible; height: 0px; width: 100%;\\\"><div align=\\\"center\\\" style=\\\"border-style: ridge ridge none; border-width: 2px 2px 0px; padding: 1px; overflow: visible; vertical-align: bottom; -moz-border-radius-topleft: 10px; -moz-border-radius-topright: 10px; opacity: 0.5; background-color: white; position: relative; top: -19px; left: -434px; z-index: 900; width: 40px; height: 15px; cursor: pointer;\\\"><span style=\\\"font-family: Arial,Helvetica,Sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: bold; line-height: 140%; text-align: right; text-decoration: none; opacity: 1.5; color: black;\\\" onclick=\\\"cc_getCaptions();\\\">[CC]</span></div></div></div>";
+var cc_InsertTabJSInnerHTML = "<br/><div id=\\\"CC_tabDiv\\\" style=\\\"margin: 0px; padding: 0px; overflow: visible; display: block; width: 480px;\\\"><div align=\\\"right\\\" style=\\\"overflow: visible; height: 0px; width: 100%;\\\"><div align=\\\"center\\\" style=\\\"border-style: ridge ridge none; border-width: 2px 2px 0px; padding: 1px; overflow: visible; vertical-align: bottom; -moz-border-radius-topleft: 10px; -moz-border-radius-topright: 10px; opacity: 0.5; background-color: white; position: relative; top: -19px; left: -434px; z-index: 900; width: 40px; height: 15px; cursor: pointer;\\\"><span style=\\\"font-family: Arial,Helvetica,Sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: bold; line-height: 140%; text-align: right; text-decoration: none; opacity: 1.5; color: black;\\\" onclick=\\\"cc_getCations();\\\">[CC]</span></div></div></div>";
 
 cc_InsertTabJS += cc_InsertTabJSInnerHTML + "\";";
 
@@ -270,7 +183,7 @@ objTarget.appendChild(cc_writePlayerDivScript);
 
 
 //function to get the captions and re-write the divs
-var cc_getCaptionsJS = "function cc_getCaptions(){";
+var cc_getCaptionsJS = "function cc_getCations(){";
 cc_getCaptionsJS += "/*hide the CC tab, only re-write the div if the cc tab is visible so we don't do it again*/";
 cc_getCaptionsJS += "if(document.getElementById('CC_tabDiv')!=null){";
 cc_getCaptionsJS += "document.getElementById('CC_tabDiv').style.visibility = 'hidden';";

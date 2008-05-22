@@ -1,27 +1,3 @@
-var cc_updateScript = document.createElement("script");
-cc_updateScript.type = "text/javascript";
-cc_updateScript.innerHTML ="function update( num ){";
-//If num is 2 or 3 we need to move youtube stuff down
-cc_updateScript.innerHTML +="var cc_wov = document.getElementById('watch-other-vids');";
-
-cc_updateScript.innerHTML +="var cc_x = ObjectCoOrdinates('watch-ratings-views');";
-
-cc_updateScript.innerHTML +="cc_wov.style.position = 'absolute';";
-cc_updateScript.innerHTML +="cc_x.x+=00;";
-cc_updateScript.innerHTML +="cc_x.y+=0;";
-cc_updateScript.innerHTML +="cc_wov.style.top=parseInt(cc_x.y-10,10)+'px';";
-cc_updateScript.innerHTML +="cc_wov.style.left = parseInt(cc_x.x+430,10)+'px';";
-cc_updateScript.innerHTML +="for( var i = 1 ; i <= 3 ; i++ ){";
-cc_updateScript.innerHTML +="var strID='content'+i;";
-cc_updateScript.innerHTML +="document.getElementById( strID).style.display = \"none\";";
-cc_updateScript.innerHTML +="}";
-cc_updateScript.innerHTML +="document.getElementById( 'content' + num ).style.display = \"inline\";";
-cc_updateScript.innerHTML +="document.getElementById( 'cc_DIV_UI_Contents' ).className = \"section-\" + num;";
-cc_updateScript.innerHTML +="}";
-document.getElementById("watch-player-div").appendChild(cc_updateScript);
-
-
-
 var ul=document.createElement("ul");
 ul.id="menu";
 ul.innerHTML='<li id="nav-1"><a href="javascript:update(1)">View</a></li>\n';

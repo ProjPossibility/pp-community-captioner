@@ -53,6 +53,10 @@ function doesCapExist($videoId){
 function getCaption($videoId,$domain){
 
 	try{
+          
+    //DEBUG
+    //echo "alert('inside getcaption, vidID: " . $videoId . "');";
+
                 //need to make sure we are storing these right and with $domain.$videoId so we can use = instead of "like"
 		$query  = "SELECT XML_FilePath FROM Video where URL_ID like '%".$videoId."%'";
 		$result = mysql_query($query);
@@ -185,7 +189,8 @@ function setCaption($videoId, $caption){
 	  	chdir(substr($videoId,0,1));
 
 	  	if(@mkdir($videoId, $mode) || is_dir($videoId))
-		{
+		{       
+                        //DEBUG
 			echo"inside if";
 				chdir($videoId);
 				//echo '.......... '.getcwd();
@@ -194,10 +199,14 @@ function setCaption($videoId, $caption){
 
 				if (file_exists($file_path))  //race condition here
 				{
-					echo "file exists";
+			//DEBUG
+                        echo "alert('file exists');";
                                   //rename the current file to a timestamp version
                                   date_default_timezone_set('UTC');
                                   $strNewFileName = date("dmYHis").".xml";
+                                  
+                        //DEBUG
+                        echo "alert('new name is: "+$strNewFileName+"');";
                                   if(!rename($file_path,$strNewFileName))
                                   {
                                    //rename failed! try with miliseconds
@@ -212,7 +221,10 @@ function setCaption($videoId, $caption){
                                   try
                                   {
                               		$query  = "INSERT into Version (URL_ID, Version_ID) VALUES ('".$videoId."','".$strNewFileName."');";
-                       				
+
+                        //DEBUG
+                        echo "alert('running query to insert new filename: "+$query+"');";
+
                               		if(!mysql_query($query))
                               		{
                                          echo "alert('Error inserting old version!');";
@@ -270,7 +282,8 @@ case "captionExist" :
 	break;
 
 case "getCaption" :
-	echo "var cc_capXml = '" .$file_path.getCaption($url_id,$domain) . "';alert(cc_capXml);";
+	echo "var cc_capXml = '" .$file_path.getCaption($url_id,$domain) . "';";
+	echo "if (cc_capXml == '$file_path') { cC_capXml = '-1'; }"; //return -1 if no captions are found
 	echo "\nfunction as_to_js(){"."\n\treturn cc_capXml;"."\n}"."\nfunction CaptionURLRetrieved(){\ndocument.flash.CaptionURLRetrieved(cc_capXml);}\nCaptionURLRetrieved();";
 	break;
 

@@ -265,7 +265,6 @@ function setCaption($videoId, $caption){
                                   try
                                   {
                               		$query = "INSERT into Version (URL_ID, Version_ID) VALUES ('".$videoId."','".$strNewFileName."');";
-                              		$query = "INSERT INTO VIDEO_20081018(URL_ID) VALUES('TEST01');";
 
                         //DEBUG
                         echo "alert('running query to insert new filename: "+$query+"');";

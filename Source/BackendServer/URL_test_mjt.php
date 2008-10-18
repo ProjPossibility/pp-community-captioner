@@ -22,6 +22,9 @@ $xml = $_POST["xml"];
 $caption = base64_decode($_POST["captionXML"]);
 //$caption = $_GET["caption"];
 
+//20081018
+$tableNameVideo = "VIDEO_20081018";
+$tableNameCaption = "CAPTION_20081018";
 
 function doesCapExist($videoId){
 	
@@ -38,6 +41,24 @@ function doesCapExist($videoId){
 		}
 		*/
 				
+		if(mysql_num_rows($result) > 0){
+			return "true";
+		}
+		else{
+			return "false";
+		}
+	}
+	catch(Exception $e){
+		echo 'Message: ' .$e->getMessage();
+	}
+}
+
+function doesCapExist2($videoId){
+	
+	try{
+		$query  = "SELECT * FROM " . $tableNameVideoVideo . " WHERE URL_ID = '" . $videoId . "'";
+		$result = mysql_query($query);
+	
 		if(mysql_num_rows($result) > 0){
 			return "true";
 		}
@@ -251,6 +272,7 @@ function setCaption($videoId, $caption){
                  }
 
             }
+            
 
 		}
 		else
@@ -261,6 +283,26 @@ function setCaption($videoId, $caption){
 
 
 		//if(mkdir_recursive($filepath, $mode))
+		
+		
+		//20081018
+      if(doesCapExist2($videoId) == "false")
+      {
+		   $query = "INSERT INTO " . $tableNameVideo . "(URL_ID) VALUES ('" . $videoId . "');";
+   		if(!mysql_query($query))
+   		{
+   		   echo "alert('Error inserting new version!');";
+   		   return;
+   		}
+      }
+      
+      $query = "INSERT INTO " . $tableNameCaption . "(URL_ID, CONTENT, TIMESTAMP) VALUES ('" . $videoId . "','" . $caption . "','" . date("Y-m-d H-i-s") . "');";
+   	if(!mysql_query($query))
+   	{
+   	   echo "alert('Error inserting new version!');";
+   	   return;
+   	}
+				
 
 	}
 	catch(Exception $e)

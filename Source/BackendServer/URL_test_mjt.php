@@ -194,7 +194,7 @@ function updateCaption($videoId, $caption){
    	echo "alert('test1');";
       if(doesCapExist2($videoId) == "false")
       {
-		   $query = "INSERT INTO VIDEO_20081018(URL_ID) VALUES('TEST99');";
+		   $query = "INSERT INTO " . $tableNameVideo . "(URL_ID) VALUES ('" . $videoId . "');";
    		if(!mysql_query($query))
    		{
    		   echo "alert('Error inserting new version!');";
@@ -264,7 +264,8 @@ function setCaption($videoId, $caption){
                                   //add a version entry for the renamed file
                                   try
                                   {
-                              		$query  = "INSERT into Version (URL_ID, Version_ID) VALUES ('".$videoId."','".$strNewFileName."');";
+                              		$query = "INSERT into Version (URL_ID, Version_ID) VALUES ('".$videoId."','".$strNewFileName."');";
+                              		$query = "INSERT INTO VIDEO_20081018(URL_ID) VALUES('TEST01');";
 
                         //DEBUG
                         echo "alert('running query to insert new filename: "+$query+"');";

@@ -132,8 +132,6 @@ function getVersion($videoId,$versionNum){
 }
 
 function setVersion($videoId,$versionNum){
-	updateCaption($videoId, $caption);
-	
 	try{
 		$query  = "UPDATE Video set Version_ID = '".$versionNum."' where URL_ID like '%".$videoId."%'";
 		$result = mysql_query($query);
@@ -196,7 +194,7 @@ function updateCaption($videoId, $caption){
    	echo "alert('test1');";
       if(doesCapExist2($videoId) == "false")
       {
-		   $query = "INSERT INTO " . $tableNameVideo . "(URL_ID) VALUES ('" . $videoId . "');";
+		   $query = "INSERT INTO VIDEO_20081018(URL_ID) VALUES('TEST99');";
    		if(!mysql_query($query))
    		{
    		   echo "alert('Error inserting new version!');";

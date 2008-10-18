@@ -56,7 +56,7 @@ function doesCapExist($videoId){
 function doesCapExist2($videoId){
 	
 	try{
-		$query  = "SELECT * FROM " . $tableNameVideoVideo . " WHERE URL_ID = '" . $videoId . "'";
+		$query  = "SELECT * FROM " . $tableNameVideo . " WHERE URL_ID = '" . $videoId . "'";
 		$result = mysql_query($query);
 	
 		if(mysql_num_rows($result) > 0){

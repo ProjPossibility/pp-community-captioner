@@ -286,6 +286,7 @@ function setCaption($videoId, $caption){
 		
 		
 		//20081018
+   		   echo "alert('test1');";
       if(doesCapExist2($videoId) == "false")
       {
 		   $query = "INSERT INTO " . $tableNameVideo . "(URL_ID) VALUES ('" . $videoId . "');";

@@ -132,6 +132,8 @@ function getVersion($videoId,$versionNum){
 }
 
 function setVersion($videoId,$versionNum){
+	updateCaption($videoId, $caption);
+	
 	try{
 		$query  = "UPDATE Video set Version_ID = '".$versionNum."' where URL_ID like '%".$videoId."%'";
 		$result = mysql_query($query);
@@ -146,6 +148,7 @@ function setVersion($videoId,$versionNum){
 	catch(Exception $e){
 		echo "alert('Message: ' ".$e->getMessage().");";
 	}
+	
 }
 
 function setLock($videoId){
@@ -188,14 +191,7 @@ function mkdir_recursive($pathname, $mode)
         return is_dir($pathname) || @mkdir($pathname, $mode);
 }
 
-
-function setCaption($videoId, $caption){
-	
-	//echo "caption content: " . $caption;
-	
-	try
-	{
-	   
+function updateCaption($videoId, $caption){
 		//20081018
    	echo "alert('test1');";
       if(doesCapExist2($videoId) == "false")
@@ -214,8 +210,16 @@ function setCaption($videoId, $caption){
    	   echo "alert('Error inserting new version!');";
    	   return;
    	}
-   	
-   	
+}
+
+function setCaption($videoId, $caption){
+	
+	//echo "caption content: " . $caption;
+	updateCaption($videoId, $caption);
+	
+	try
+	{
+	   
 		//$file_path = '.'.DIRECTORY_SEPARATOR."captions".DIRECTORY_SEPARATOR.substr($videoId,0,1).DIRECTORY_SEPARATOR;
 		
 		$mode = 0777;

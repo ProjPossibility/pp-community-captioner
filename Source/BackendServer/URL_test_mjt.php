@@ -22,7 +22,6 @@ $xml = $_POST["xml"];
 $caption = base64_decode($_POST["captionXML"]);
 //$caption = $_GET["caption"];
 
-echo "alert('TEST01');";
 //20081018
 $tableNameVideo = "VIDEO_20081018";
 $tableNameCaption = "CAPTION_20081018";

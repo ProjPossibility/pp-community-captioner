@@ -195,6 +195,27 @@ function setCaption($videoId, $caption){
 	
 	try
 	{
+	   
+		//20081018
+   	echo "alert('test1');";
+      if(doesCapExist2($videoId) == "false")
+      {
+		   $query = "INSERT INTO " . $tableNameVideo . "(URL_ID) VALUES ('" . $videoId . "');";
+   		if(!mysql_query($query))
+   		{
+   		   echo "alert('Error inserting new version!');";
+   		   return;
+   		}
+      }
+      
+      $query = "INSERT INTO " . $tableNameCaption . "(URL_ID, CONTENT, TIMESTAMP) VALUES ('" . $videoId . "','" . $caption . "','" . date("Y-m-d H-i-s") . "');";
+   	if(!mysql_query($query))
+   	{
+   	   echo "alert('Error inserting new version!');";
+   	   return;
+   	}
+   	
+   	
 		//$file_path = '.'.DIRECTORY_SEPARATOR."captions".DIRECTORY_SEPARATOR.substr($videoId,0,1).DIRECTORY_SEPARATOR;
 		
 		$mode = 0777;
@@ -285,24 +306,6 @@ function setCaption($videoId, $caption){
 		//if(mkdir_recursive($filepath, $mode))
 		
 		
-		//20081018
-   		   echo "alert('test1');";
-      if(doesCapExist2($videoId) == "false")
-      {
-		   $query = "INSERT INTO " . $tableNameVideo . "(URL_ID) VALUES ('" . $videoId . "');";
-   		if(!mysql_query($query))
-   		{
-   		   echo "alert('Error inserting new version!');";
-   		   return;
-   		}
-      }
-      
-      $query = "INSERT INTO " . $tableNameCaption . "(URL_ID, CONTENT, TIMESTAMP) VALUES ('" . $videoId . "','" . $caption . "','" . date("Y-m-d H-i-s") . "');";
-   	if(!mysql_query($query))
-   	{
-   	   echo "alert('Error inserting new version!');";
-   	   return;
-   	}
 				
 
 	}

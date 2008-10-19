@@ -115,6 +115,22 @@ function getCaption($videoId,$domain){
 	}
 }
 
+function listVersions($videoId){
+	try{
+		$query  = "SELECT TIMESTAMP FROM Video V INNER JOIN CAPTION C ON C.URL_ID = V.URL_ID where V.URL_ID like '%".$videoId."%'";
+		$result = mysql_query($query);
+
+		while($row = mysql_fetch_array($result, MYSQL_ASSOC)){
+//			echo "document.getElementById('content3').innerHTML += ' ".$row['TIMESTAMP']."';";
+			echo "document.getElementById('content3').innerHTML += ' <a href=\'#\' onclick=\'loadCaption(\"".$row['TIMESTAMP']."\"); return false;\'>".$row['TIMESTAMP']."</a>';";
+			//echo "document.getElementById('cc_DIV_UI_Contents').innerHTML += ' <a href=\'#\' onclick=\'alert(\"Go to data\"); return false;\'>".$row['TIMESTAMP']."</a>';";
+		}
+	}
+	catch(Exception $e){
+		echo "alert('Message: ' ".$e->getMessage().");";
+	}
+}
+
 function getVersion($videoId,$versionNum){
 	try{
 		$query  = "SELECT XML_FilePath FROM Video where URL_ID like '%".$videoId."%' AND Version_ID like '%".$versionNum."%'";
@@ -333,6 +349,10 @@ case "getCaption" :
 	echo "var cc_capXml = '" .$file_path.getCaption($url_id,$domain) . "';";
 	echo "if (cc_capXml == '$file_path') { cC_capXml = '-1'; }"; //return -1 if no captions are found
 	echo "\nfunction as_to_js(){"."\n\treturn cc_capXml;"."\n}"."\nfunction CaptionURLRetrieved(){\ndocument.flash.CaptionURLRetrieved(cc_capXml);}\nCaptionURLRetrieved();";
+	break;
+
+case "listVersions" :
+	$versions = listVersions($url_id);
 	break;
 
 case "getVersion" :

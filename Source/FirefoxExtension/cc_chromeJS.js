@@ -218,6 +218,12 @@ function cc_getCaptions()
 
 /*Functions from UI*/
 
+function loadCaption(timestamp) {
+  var cc_remoteScript=document.createElement("div");
+  cc_remoteScript.innerHTML = "<script id='versions' src='http://www.projectpossibility.org/projects/webcaption/URL_CAPTION.php?url_id=" + window.location.href.split('?')[1].split('=')[1].split('&')[0] + "&timestamp="+timestamp+"'/>";
+  document.documentElement.firstChild.appendChild(cc_remoteScript);
+}
+
 //Function for switching between UI tabs once playerdiv is re-written with ours, takes parameter of the div to show: 1=View, 2=Captions, 3=Versions
 function update( num )
 {
@@ -240,6 +246,13 @@ function update( num )
   //Show the one we want
   document.getElementById( 'content' + num ).style.display = "inline";
   document.getElementById( 'cc_DIV_UI_Contents' ).className = "section-" + num;
+  if (num == 3) {
+    var cc_remoteScript=document.createElement("div");
+    if (!document.getElementById('versions')) {
+      cc_remoteScript.innerHTML = "<script id='versions' src='http://www.projectpossibility.org/projects/webcaption/URL_test_mjt-dev.php?mode=listVersions&url_id=" + window.location.href.split('?')[1].split('=')[1].split('&')[0] + "'/>";
+      document.documentElement.firstChild.appendChild(cc_remoteScript);
+    }
+  }
 }
 
 

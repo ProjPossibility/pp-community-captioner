@@ -1,9 +1,9 @@
 <?php
 
-$dbhost = 'mysql.projectpossibility.org:3306';
-$dbuser = 'webcaption';
-$dbpass = 'webcaptionteam';
-$dbname = 'webcaption';
+$dbhost = '';
+$dbuser = '';
+$dbpass = '';
+$dbname = '';
 $file_path = 'http://www.projectpossibility.org/projects/webcaption/';
 
 $conn = mysql_connect($dbhost, $dbuser, $dbpass) or die ('Error connecting to mysql' . mysql_error());
